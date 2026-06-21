@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auto Research：用 AI Agent 自动化科研流程 | 安博程</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f; --surface: #16161a; --surface-2: #1e1e24;
+  --text: #e8e8ed; --text-dim: #94949e; --accent: #4fc3f7;
+  --accent-warm: #ff8a65; --accent-green: #66bb6a; --accent-gold: #ffd54f;
+  --border: #2a2a32;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+a { color: var(--accent); text-decoration: none; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; padding: 20px 0; font-size: 0.9em; color: var(--text-dim); }
+.back-link:hover { color: var(--accent); }
+.article-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+.article-title { font-size: 2em; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+.article-meta { color: var(--text-dim); font-size: 0.9em; }
+.article-body h2 { font-size: 1.4em; margin: 40px 0 16px; color: var(--accent); }
+.article-body h3 { font-size: 1.15em; margin: 32px 0 12px; }
+.article-body p { margin-bottom: 16px; color: var(--text-dim); }
+.article-body strong { color: var(--text); }
+.article-body blockquote {
+  border-left: 3px solid var(--accent); padding: 12px 20px; margin: 20px 0;
+  background: var(--surface); border-radius: 0 8px 8px 0;
+}
+.article-body code { font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+.article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 16px; }
+.article-body li { margin-bottom: 8px; color: var(--text-dim); }
+.article-footer { margin-top: 60px; padding: 32px 0; border-top: 1px solid var(--border); text-align: center; }
+.article-footer a { color: var(--accent); }
+.site-footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.82em; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a class="back-link" href="index.html#blog">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">Auto Research：用 AI Agent 自动化科研流程</h1>
+    <div class="article-meta">
+      ✍️ Victor Chen · 📅 2026-05-10 · 🏷️ Auto Research, Multi-Agent, 科研
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p>科研流程中存在大量重复性工作：文献调研、数据处理、实验设计、结果分析……如果这些都能自动化呢？</p>
+
+    <h2>🔬 问题：科研的时间分配</h2>
+    <p>一个典型的研究者可能把时间花在：</p>
+    <ul>
+      <li>40% 阅读论文和调研</li>
+      <li>30% 写代码和调试</li>
+      <li>20% 写作和整理</li>
+      <li>10% 真正的思考和创新</li>
+    </ul>
+    <p>如果我们能把前 90% 的工作自动化，会发生什么？</p>
+
+    <h2>🤖 ARIS 框架：Auto-Research-In-Sleep</h2>
+    <p>ARIS 是一个轻量级的 Markdown-only 技能系统，用于实现自主 ML 研究。它的核心特点：</p>
+    <ul>
+      <li><strong>跨模型审查循环</strong> — 多个 AI 模型互相审查，提高质量</li>
+      <li><strong>想法发现</strong> — 自动从文献中发现研究空白</li>
+      <li><strong>实验自动化</strong> — 从设计到执行到分析</li>
+    </ul>
+
+    <h2>🏗️ 多 Agent 协作架构</h2>
+    <p>关键在于<strong>角色分工</strong>：</p>
+    <ul>
+      <li>🔍 <strong>Researcher Agent</strong> — 负责文献调研和知识收集</li>
+      <li>💻 <strong>Engineer Agent</strong> — 负责代码实现和实验</li>
+      <li>📝 <strong>Writer Agent</strong> — 负责论文写作和整理</li>
+      <li>🔍 <strong>Reviewer Agent</strong> — 负责质量审查和反馈</li>
+    </ul>
+
+    <h2>📊 实践：从想法到论文</h2>
+    <p>以交通流预测为例，一个自动化流程可能如下：</p>
+    <ol>
+      <li>Researcher Agent 搜索最新论文，总结研究空白</li>
+      <li>多个 Agent 头脑风暴，生成研究假设</li>
+      <li>Engineer Agent 实现 baseline 和新方法</li>
+      <li>自动运行实验，生成结果表格和图表</li>
+      <li>Writer Agent 起草论文初稿</li>
+      <li>Reviewer Agent 提出修改建议</li>
+    </ol>
+
+    <h2>⚠️ 挑战与思考</h2>
+    <p>自动化科研并非没有挑战：</p>
+    <ul>
+      <li><strong>质量控制</strong> — AI 生成的内容需要人类把关</li>
+      <li><strong>创新性</strong> — 真正的突破性想法仍需人类直觉</li>
+      <li><strong>伦理问题</strong> — AI 辅助 vs AI 代写的边界</li>
+    </ul>
+
+    <h2>🎯 结论</h2>
+    <p>Auto Research 不是要取代研究者，而是把研究者从重复性工作中解放出来，让他们专注于真正重要的事：<strong>思考和创新</strong>。</p>
+  </div>
+
+  <div class="article-footer">
+    <a href="index.html#blog">← 返回博客列表</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博程 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+</body>
+</html>

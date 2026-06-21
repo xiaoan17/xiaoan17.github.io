@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Self-Play 的故事：从 AlphaGo 到 AI Agent | 安博程</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f; --surface: #16161a; --surface-2: #1e1e24;
+  --text: #e8e8ed; --text-dim: #94949e; --accent: #4fc3f7;
+  --accent-warm: #ff8a65; --accent-green: #66bb6a; --accent-gold: #ffd54f;
+  --border: #2a2a32;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Noto Sans SC', sans-serif; background: var(--bg); color: var(--text); line-height: 1.8; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+a { color: var(--accent); text-decoration: none; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 32px; }
+.back-link { display: inline-flex; align-items: center; gap: 6px; padding: 20px 0; font-size: 0.9em; color: var(--text-dim); }
+.back-link:hover { color: var(--accent); }
+.article-header { padding: 40px 0 32px; border-bottom: 1px solid var(--border); margin-bottom: 40px; }
+.article-title { font-size: 2em; font-weight: 700; margin-bottom: 12px; line-height: 1.4; }
+.article-meta { color: var(--text-dim); font-size: 0.9em; }
+.article-body h2 { font-size: 1.4em; margin: 40px 0 16px; color: var(--accent); }
+.article-body h3 { font-size: 1.15em; margin: 32px 0 12px; }
+.article-body p { margin-bottom: 16px; color: var(--text-dim); }
+.article-body strong { color: var(--text); }
+.article-body blockquote {
+  border-left: 3px solid var(--accent); padding: 12px 20px; margin: 20px 0;
+  background: var(--surface); border-radius: 0 8px 8px 0;
+}
+.article-body code { font-family: 'JetBrains Mono', monospace; background: var(--surface); padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+.article-body ul, .article-body ol { padding-left: 24px; margin-bottom: 16px; }
+.article-body li { margin-bottom: 8px; color: var(--text-dim); }
+.article-footer { margin-top: 60px; padding: 32px 0; border-top: 1px solid var(--border); text-align: center; }
+.article-footer a { color: var(--accent); }
+.site-footer { text-align: center; padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.82em; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a class="back-link" href="index.html#blog">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">Self-Play 的故事：从 AlphaGo 到 AI Agent</h1>
+    <div class="article-meta">
+      ✍️ Victor Chen · 📅 2026-05-20 · 🏷️ Self-Play, AlphaGo, AI
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p>2016 年，AlphaGo 击败李世石。但真正让人震撼的不是它学会了人类棋谱，而是它通过<strong>自我对弈</strong>超越了所有人类知识。</p>
+
+    <h2>🎲 什么是 Self-Play？</h2>
+    <p>Self-Play 的核心思想极其简单：</p>
+    <blockquote>让 AI 和过去的自己对弈，从对弈中学习，不断进化。</blockquote>
+    <p>不需要人类数据，不需要人类指导。只需要一个规则框架和一个学习算法。</p>
+
+    <h2>🏆 从棋类到游戏</h2>
+    <p>Self-Play 在棋类游戏中的成功令人瞩目：</p>
+    <ul>
+      <li><strong>围棋</strong> — AlphaGo Zero：从零开始，3天超越人类水平</li>
+      <li><strong>国际象棋</strong> — AlphaZero：4小时成为最强棋手</li>
+      <li><strong>星际争霸</strong> — AlphaStar：通过自我对弈学会复杂策略</li>
+    </ul>
+
+    <h2>🚀 从游戏到现实</h2>
+    <p>Self-Play 的应用早已超越游戏：</p>
+    <ul>
+      <li><strong>机器人控制</strong> — 机器人通过自我尝试学会行走</li>
+      <li><strong>自动驾驶</strong> — 在模拟环境中自我对弈学习驾驶策略</li>
+      <li><strong>代码生成</strong> — AI 通过自我审查提高代码质量</li>
+    </ul>
+
+    <h2>🤖 Self-Play 与 AI Agent</h2>
+    <p>当我们将 Self-Play 思想应用到 AI Agent 时，有趣的事情发生了：</p>
+    <ul>
+      <li><strong>Generator vs Critic</strong> — 一个 Agent 生成方案，另一个 Agent 批评审查</li>
+      <li><strong>Red Team vs Blue Team</strong> — 一个 Agent 寻找漏洞，另一个 Agent 修补</li>
+      <li><strong>Teacher vs Student</strong> — 一个 Agent 出题，另一个 Agent 解题</li>
+    </ul>
+
+    <h2>🔬 在科研中的应用</h2>
+    <p>Self-Play 对科研自动化的启示：</p>
+    <ul>
+      <li>让多个 Agent 互相审查论文，提高写作质量</li>
+      <li>让 Agent 自己提出假设，自己验证，自己批评</li>
+      <li>通过对抗性讨论发现研究中的盲点</li>
+    </ul>
+
+    <h2>🎯 核心启示</h2>
+    <p>Self-Play 告诉我们一个深刻的道理：</p>
+    <blockquote>最好的老师往往就是你自己 — 如果你能学会和过去的自己对弈的话。</blockquote>
+    <p>在 AI Agent 时代，这意味着：不要只用一个 Agent。用多个 Agent，让它们互相竞争、互相学习、共同进化。</p>
+  </div>
+
+  <div class="article-footer">
+    <a href="index.html#blog">← 返回博客列表</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博程 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+</body>
+</html>
