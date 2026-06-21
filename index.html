@@ -55,11 +55,12 @@ a:hover { opacity: 0.8; }
 .hero-grid { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; }
 .hero-right { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .hero-avatar {
-  width: 140px; height: 140px; border-radius: 50%; overflow: hidden;
+  width: 150px; height: 150px; border-radius: 50%; overflow: hidden;
   border: 3px solid var(--border); box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   background: var(--surface);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 3em;
+}
+.hero-avatar img {
+  width: 100%; height: 100%; object-fit: cover; object-position: center top;
 }
 .hero-name {
   font-size: 2.8em; font-weight: 700; letter-spacing: -0.03em; margin-bottom: 6px;
