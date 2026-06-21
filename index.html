@@ -121,6 +121,14 @@ a:hover { opacity: 0.8; }
 .project-card-footer { display: flex; align-items: center; gap: 12px; font-size: 0.8em; color: var(--text-dim); }
 
 /* Research Section */
+.scholar-stats {
+  display: flex; gap: 32px; padding: 20px 28px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 10px; margin-bottom: 28px;
+  justify-content: center; flex-wrap: wrap;
+}
+.scholar-stat { text-align: center; }
+.scholar-stat-num { font-size: 1.8em; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+.scholar-stat-label { font-size: 0.78em; color: var(--text-dim); margin-top: 2px; }
 .research-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
 .research-tag {
   padding: 6px 16px; border-radius: 20px; font-size: 0.85em; cursor: pointer;
@@ -129,33 +137,52 @@ a:hover { opacity: 0.8; }
 }
 .research-tag:hover { border-color: var(--accent); color: var(--accent); }
 .research-tag.active { background: rgba(79,195,247,0.15); border-color: var(--accent); color: var(--accent); }
-.paper-list { display: flex; flex-direction: column; gap: 16px; }
+.year-header {
+  font-size: 1.2em; font-weight: 700; color: var(--accent); margin: 32px 0 16px;
+  padding-bottom: 8px; border-bottom: 1px dashed var(--border);
+  font-family: 'JetBrains Mono', monospace;
+}
+.year-header:first-of-type { margin-top: 0; }
+.paper-list { display: flex; flex-direction: column; gap: 14px; }
 .paper-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 22px 24px; transition: all 0.2s;
+  padding: 20px 22px; transition: all 0.2s; position: relative;
 }
 .paper-card:hover { border-color: var(--accent); }
-.paper-title { font-size: 1.05em; font-weight: 600; margin-bottom: 8px; color: var(--text); line-height: 1.5; }
+.paper-card-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 8px; }
+.paper-title { font-size: 1em; font-weight: 600; color: var(--text); line-height: 1.5; flex: 1; }
 .paper-title a { color: var(--text); }
 .paper-title a:hover { color: var(--accent); }
-.paper-meta { font-size: 0.82em; color: var(--text-dim); margin-bottom: 8px; display: flex; flex-wrap: wrap; gap: 12px; }
+.paper-cite-count {
+  flex-shrink: 0; font-size: 0.82em; padding: 2px 10px; border-radius: 12px;
+  background: rgba(255,213,79,0.12); color: var(--accent-gold); font-weight: 600;
+  font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+}
+.paper-meta { font-size: 0.8em; color: var(--text-dim); margin-bottom: 6px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.paper-type {
+  font-size: 0.7em; padding: 1px 7px; border-radius: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.type-journal { background: rgba(79,195,247,0.12); color: var(--accent); }
+.type-conference { background: rgba(102,187,106,0.12); color: var(--accent-green); }
+.type-patent { background: rgba(255,138,101,0.12); color: var(--accent-warm); }
+.type-preprint { background: rgba(255,213,79,0.12); color: var(--accent-gold); }
 .paper-venue { color: var(--accent-warm); font-weight: 500; }
 .paper-if { color: var(--accent-gold); font-weight: 500; }
-.paper-authors { font-size: 0.88em; color: var(--text-dim); margin-bottom: 6px; }
+.paper-authors { font-size: 0.85em; color: var(--text-dim); margin-bottom: 4px; }
 .paper-authors strong { color: var(--text); }
-.paper-links { display: flex; gap: 10px; margin-top: 10px; }
+.paper-links { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 .paper-link {
-  font-size: 0.78em; padding: 3px 10px; border-radius: 4px;
+  font-size: 0.75em; padding: 3px 10px; border-radius: 4px;
   background: rgba(79,195,247,0.1); color: var(--accent); transition: all 0.2s;
 }
 .paper-link:hover { background: rgba(79,195,247,0.2); }
 .paper-abstract {
-  font-size: 0.85em; color: var(--text-dim); line-height: 1.6; margin-top: 10px;
+  font-size: 0.82em; color: var(--text-dim); line-height: 1.6; margin-top: 8px;
   max-height: 0; overflow: hidden; transition: max-height 0.3s ease;
 }
 .paper-abstract.show { max-height: 500px; }
 .paper-toggle {
-  font-size: 0.78em; color: var(--accent); cursor: pointer; margin-top: 6px;
+  font-size: 0.75em; color: var(--accent); cursor: pointer; margin-top: 4px;
   display: inline-block; user-select: none;
 }
 .paper-toggle:hover { text-decoration: underline; }
@@ -396,7 +423,25 @@ a:hover { opacity: 0.8; }
 
   <!-- ========== RESEARCH PAGE ========== -->
   <div id="page-research" class="page">
-    <div class="section-title"><span class="icon">🔬</span> 研究方向</div>
+    <div class="section-title"><span class="icon">🔬</span> 学术成果</div>
+
+    <!-- Scholar Stats -->
+    <a href="https://scholar.google.com/citations?user=BPZAsM0AAAAJ&hl=en" target="_blank" style="display:block; text-decoration:none;">
+      <div class="scholar-stats">
+        <div class="scholar-stat">
+          <div class="scholar-stat-num">105</div>
+          <div class="scholar-stat-label">总引用</div>
+        </div>
+        <div class="scholar-stat">
+          <div class="scholar-stat-num">16</div>
+          <div class="scholar-stat-label">论文/专利</div>
+        </div>
+        <div class="scholar-stat">
+          <div class="scholar-stat-num">2022–2026</div>
+          <div class="scholar-stat-label">发表年份</div>
+        </div>
+      </div>
+    </a>
 
     <!-- Research Area Tags -->
     <div class="research-tags">
@@ -406,18 +451,142 @@ a:hover { opacity: 0.8; }
       <span class="research-tag" data-filter="risk">⚠️ 风险评估</span>
       <span class="research-tag" data-filter="graph">🕸️ 图神经网络</span>
       <span class="research-tag" data-filter="potential-field">🔮 势场理论</span>
-      <span class="research-tag" data-filter="car-following">🚙 跟驰模型</span>
       <span class="research-tag" data-filter="control">🎛️ 交通控制</span>
+      <span class="research-tag" data-filter="patent">📜 专利</span>
+      <span class="research-tag" data-filter="llm">🤖 LLM</span>
     </div>
 
-    <!-- Papers -->
-    <div class="section-title" style="margin-top: 8px;"><span class="icon">📄</span> 发表论文（9 篇）</div>
+    <!-- 2026 -->
+    <div class="year-header" data-year="2026">📅 2026</div>
     <div class="paper-list">
-
-      <!-- Paper 009 -->
-      <div class="paper-card" data-tags="trajectory,graph,potential-field">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1109/JIOT.2024.3479221" target="_blank">Vehicular Speed Prediction Method for Highway Scenarios Based on Spatio-Temporal Graph Convolutional Networks and Potential Field Theory</a></div>
+      <div class="paper-card" data-tags="trajectory">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:_FxGoFyzp5QC" target="_blank">VARNet: A Transformer-Based Model for Vehicle Trajectory Prediction with Variable-Length Input Sequences</a></div>
+          <span class="paper-cite-count">0 引用</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
+          <span class="paper-venue">Journal of Transportation Engineering, Part A: Systems</span>
+          <span>2026</span>
+        </div>
+        <div class="paper-authors"><strong>Bocheng An</strong>, Chuang Cui, Rui Gan, Xu Qu, Bin Ran</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:_FxGoFyzp5QC" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2025 -->
+    <div class="year-header" data-year="2025">📅 2025</div>
+    <div class="paper-list">
+      <div class="paper-card" data-tags="trajectory,control">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:ufrVoPGSRksC" target="_blank">Mitigating Traffic Oscillations through Connected and Automated Vehicle Control: A Platoon-Level Cooperative Adaptive Cruise Control Strategy</a></div>
+          <span class="paper-cite-count">1 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
+          <span class="paper-venue">Applied Mathematical Modelling</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">Z Zhou, C Wang, H Ma, <strong>Bocheng An</strong>, L Li, Y Zheng, C Bao, X Qu, B Ran</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:ufrVoPGSRksC" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+
+      <div class="paper-card" data-tags="trajectory">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:W7OEmFMy1HYC" target="_blank">Goal-Based Neural Physics Vehicle Trajectory Prediction Model</a></div>
+          <span class="paper-cite-count">18 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
+          <span class="paper-venue">Transportation Research Part C: Emerging Technologies</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">R Gan, H Shi, P Li, K Wu, <strong>Bocheng An</strong>, J You, L Li, J Ma, C Ma, B Ran</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:W7OEmFMy1HYC" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+
+      <div class="paper-card" data-tags="risk">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:u-x6o8ySG0sC" target="_blank">A Unified Risk Metric for Freeway Vehicles Based on the Spatio-Temporal Overlap Probability of Predicted Positions</a></div>
+          <span class="paper-cite-count">2 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
+          <span class="paper-venue">Accident Analysis & Prevention</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">Chuang Cui, <strong>Bocheng An</strong>, Linheng Li, Xu Qu, W Li</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:u-x6o8ySG0sC" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+
+      <div class="paper-card" data-tags="llm,trajectory">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:IjCSPb-OGe4C" target="_blank">Planning Safety Trajectories with Dual-Phase, Physics-Informed, and Transportation Knowledge-Driven Large Language Model</a></div>
+          <span class="paper-cite-count">2 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-preprint">Preprint</span>
+          <span class="paper-venue">arXiv:2504.04562</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">R Gan, P Li, K Long, <strong>Bocheng An</strong>, J You, K Wu, B Ran</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:IjCSPb-OGe4C" target="_blank">🎓 Scholar</a>
+          <a class="paper-link" href="https://arxiv.org/abs/2504.04562" target="_blank">📄 arXiv</a>
+        </div>
+      </div>
+
+      <div class="paper-card" data-tags="patent">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:WF5omc3nYNoC" target="_blank">Microscopic Vehicle Motion Control System for Autonomous Driving</a></div>
+          <span class="paper-cite-count">—</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-patent">US Patent</span>
+          <span class="paper-venue">US Patent App. 19/233,577</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">B Ran, Z Wang, Q Yang, <strong>Bocheng An</strong>, B Liang, R Guo, Z Zhou, M Li, K Wu et al.</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:WF5omc3nYNoC" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+
+      <div class="paper-card" data-tags="patent">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:u5HHmVD_uO8C" target="_blank">Roadside Edge Computing System for Autonomous Vehicles</a></div>
+          <span class="paper-cite-count">—</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-patent">US Patent</span>
+          <span class="paper-venue">US Patent 12,333,932</span>
+          <span>2025</span>
+        </div>
+        <div class="paper-authors">B Ran, <strong>Bocheng An</strong>, Z Zhou, M Li, K Wu, Y Cheng, Y Yao, H Shi, T Chen, S Li et al.</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:u5HHmVD_uO8C" target="_blank">🎓 Scholar</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2024 -->
+    <div class="year-header" data-year="2024">📅 2024</div>
+    <div class="paper-list">
+      <div class="paper-card" data-tags="trajectory,graph,potential-field">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1109/JIOT.2024.3479221" target="_blank">Vehicular Speed Prediction Method for Highway Scenarios Based on Spatio-Temporal Graph Convolutional Networks and Potential Field Theory</a></div>
+          <span class="paper-cite-count">3 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">IEEE Internet of Things Journal</span>
           <span class="paper-if">IF = 8.2, Q1</span>
           <span>2024</span>
@@ -425,33 +594,19 @@ a:hover { opacity: 0.8; }
         <div class="paper-authors">Linheng Li, <strong>Bocheng An</strong>, Dapeng Zhang, Rui Gan, Zhi Zhou, Xu Qu, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1109/JIOT.2024.3479221" target="_blank">📄 IEEE Xplore</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:UeHWp8X0CEIC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:UeHWp8X0CEIC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
-        <div class="paper-abstract">Traffic flow analysis largely depends on accurate predictions of microscopic speed. This study constructs a vehicle generalized-dynamic graph to characterize vehicle trajectory, and proposes the Dynamic Edge Graph Convolutional Network (DEGCN). Experimental results on three real-world datasets demonstrate superior prediction performance over baseline models.</div>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <div class="paper-abstract">Proposes the Dynamic Edge Graph Convolutional Network (DEGCN) for microscopic vehicular speed prediction using a vehicle generalized-dynamic graph with potential field theory. Outperforms baselines on three real-world datasets.</div>
       </div>
 
-      <!-- Paper 008 -->
-      <div class="paper-card" data-tags="traffic-flow,graph">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1109/TITS.2024.3396382" target="_blank">A Freeway Traffic Flow Prediction Model Based on a Generalized Dynamic Spatio-Temporal Graph Convolutional Network</a></div>
-        <div class="paper-meta">
-          <span class="paper-venue">IEEE Trans. Intelligent Transportation Systems</span>
-          <span class="paper-if">IF = 7.9, Q1</span>
-          <span>2024</span>
-        </div>
-        <div class="paper-authors">Rui Gan, <strong>Bocheng An</strong>, Linheng Li, Xu Qu, Bin Ran</div>
-        <div class="paper-links">
-          <a class="paper-link" href="https://dx.doi.org/10.1109/TITS.2024.3396382" target="_blank">📄 IEEE Xplore</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:qjMakFHDy7sC" target="_blank">🎓 Google Scholar</a>
-        </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
-        <div class="paper-abstract">Introduces the Generalized Dynamic Spatio-Temporal Graph Convolutional Network (GDSTGCN) for traffic data, building a learning-based generalized dynamic graph structure that incorporates both spatial and temporal connections and evolves with real-time traffic data.</div>
-      </div>
-
-      <!-- Paper 007 -->
       <div class="paper-card" data-tags="risk">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1016/j.aap.2024.107611" target="_blank">A Freeway Vehicle Early Warning Method Based on Risk Map: Enhancing Traffic Safety Through Global Perspective Characterization of Driving Risk</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1016/j.aap.2024.107611" target="_blank">A Freeway Vehicle Early Warning Method Based on Risk Map: Enhancing Traffic Safety Through Global Perspective Characterization of Driving Risk</a></div>
+          <span class="paper-cite-count">13 引用</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">Accident Analysis & Prevention</span>
           <span class="paper-if">IF = 5.7, Q1</span>
           <span>2024</span>
@@ -459,16 +614,39 @@ a:hover { opacity: 0.8; }
         <div class="paper-authors">Chuang Cui, <strong>Bocheng An</strong>, Linheng Li, Xu Qu, Huhe Manda, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1016/j.aap.2024.107611" target="_blank">📄 Elsevier</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:9yKSN-GCB0IC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:9yKSN-GCB0IC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
-        <div class="paper-abstract">Proposes a freeway vehicle early warning method based on risk map using Modified Time-to-Collision (MTTC). Simulation results show total warning time reduced by 29.6% and 73.3% of vehicles change lanes away from the accident vehicle.</div>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <div class="paper-abstract">Proposes a freeway vehicle early warning method based on risk map using Modified Time-to-Collision (MTTC). Warning time reduced by 29.6% and 73.3% of vehicles change lanes away from the accident vehicle.</div>
       </div>
 
-      <!-- Paper 006 -->
-      <div class="paper-card" data-tags="car-following,potential-field">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1016/j.physa.2024.129706" target="_blank">Stability Analysis and Numerical Simulation of a Car-Following Model Considering Safety Potential Field and V2X Communication</a></div>
+      <div class="paper-card" data-tags="traffic-flow,graph">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1109/TITS.2024.3396382" target="_blank">A Freeway Traffic Flow Prediction Model Based on a Generalized Dynamic Spatio-Temporal Graph Convolutional Network</a></div>
+          <span class="paper-cite-count">21 引用</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
+          <span class="paper-venue">IEEE Trans. Intelligent Transportation Systems</span>
+          <span class="paper-if">IF = 7.9, Q1</span>
+          <span>2024</span>
+        </div>
+        <div class="paper-authors">Rui Gan, <strong>Bocheng An</strong>, Linheng Li, Xu Qu, Bin Ran</div>
+        <div class="paper-links">
+          <a class="paper-link" href="https://dx.doi.org/10.1109/TITS.2024.3396382" target="_blank">📄 IEEE Xplore</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:qjMakFHDy7sC" target="_blank">🎓 Scholar</a>
+        </div>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <div class="paper-abstract">Introduces the Generalized Dynamic Spatio-Temporal Graph Convolutional Network (GDSTGCN) with a learning-based generalized dynamic graph structure that evolves with real-time traffic data. Outperforms state-of-the-art models on four datasets.</div>
+      </div>
+
+      <div class="paper-card" data-tags="car-following,potential-field">
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1016/j.physa.2024.129706" target="_blank">Stability Analysis and Numerical Simulation of a Car-Following Model Considering Safety Potential Field and V2X Communication</a></div>
+          <span class="paper-cite-count">17 引用</span>
+        </div>
+        <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">Physica A: Statistical Mechanics and its Applications</span>
           <span class="paper-if">IF = 2.8, Q2</span>
           <span>2024</span>
@@ -476,48 +654,61 @@ a:hover { opacity: 0.8; }
         <div class="paper-authors">Linheng Li, <strong>Bocheng An</strong>, Zhiyu Wang, Jing Gan, Xu Qu, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1016/j.physa.2024.129706" target="_blank">📄 Elsevier</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:Y0pCki6q_DkC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:Y0pCki6q_DkC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
-        <div class="paper-abstract">Develops an improved car-following model considering effects of multiple leading vehicles under V2X environment, constructing distance-based and field-based models for influence weights. The field-based model outperforms the distance-based model.</div>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <div class="paper-abstract">Develops an improved car-following model under V2X environment. The field-based model outperforms the distance-based model. Stability improves as the number of leading vehicles increases.</div>
       </div>
+    </div>
 
-      <!-- Paper 005 -->
+    <!-- 2023 -->
+    <div class="year-header" data-year="2023">📅 2023</div>
+    <div class="paper-list">
       <div class="paper-card" data-tags="potential-field,car-following">
-        <div class="paper-title"><a href="https://dx.doi.org/10.26599/JICV.2023.9210006" target="_blank">Anisotropy Safety Potential Field Model under Intelligent and Connected Vehicle Environment and Its Application in Car-following Modeling</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.26599/JICV.2023.9210006" target="_blank">Anisotropy Safety Potential Field Model under Intelligent and Connected Vehicle Environment and Its Application in Car-Following Modeling</a></div>
+          <span class="paper-cite-count">24 引用</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">Journal of Intelligent and Connected Vehicles</span>
           <span>2023</span>
         </div>
         <div class="paper-authors">Haozhan Ma, <strong>Bocheng An</strong>, Linheng Li, Zhi Zhou, Xu Qu, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.26599/JICV.2023.9210006" target="_blank">📄 Publisher</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:YsMSGLbcyi4C" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:YsMSGLbcyi4C" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
         <div class="paper-abstract">Proposes an anisotropic potential field model considering vehicle impact variability in different directions, introducing equivalent distances, co-virtual forces, target forces and lane resistance.</div>
       </div>
 
-      <!-- Paper 004 -->
       <div class="paper-card" data-tags="control">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1061/9780784484869.128" target="_blank">Cooperative Control Strategy of Variable Speed Limit and Lane Change Guidance in Freeway Bottleneck Area</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1061/9780784484869.128" target="_blank">Cooperative Control Strategy of Variable Speed Limit and Lane Change Guidance in Freeway Bottleneck Area</a></div>
+          <span class="paper-cite-count">—</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-conference">Conference</span>
           <span class="paper-venue">CICTP 2023</span>
           <span>2023</span>
         </div>
         <div class="paper-authors">Chuang Cui, <strong>Bocheng An</strong>, Xu Qu</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1061/9780784484869.128" target="_blank">📄 Publisher</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:d1gkVwhDpl0C" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:d1gkVwhDpl0C" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
         <div class="paper-abstract">Proposes a cooperative control strategy combining variable speed limit (VSL) and lane change guidance (LCG) for freeway bottleneck areas using model predictive control (MPC).</div>
       </div>
 
-      <!-- Paper 003 -->
       <div class="paper-card" data-tags="risk">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1049/itr2.12405" target="_blank">Mass-Based Omni-Directional Risk Indicator (MORI) for Multi-Participant Traffic</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1049/itr2.12405" target="_blank">Mass-Based Omni-Directional Risk Indicator (MORI) for Multi-Participant Traffic</a></div>
+          <span class="paper-cite-count">8 引用</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">IET Intelligent Transport Systems</span>
           <span class="paper-if">IF = 2.3, Q2</span>
           <span>2023</span>
@@ -525,51 +716,59 @@ a:hover { opacity: 0.8; }
         <div class="paper-authors">Haozhan Ma, Linheng Li, <strong>Bocheng An</strong>, Ziwei Yi, Xu Qu, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1049/itr2.12405" target="_blank">📄 Wiley</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:2osOgNQ5qMEC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:2osOgNQ5qMEC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
         <div class="paper-abstract">Introduces the concept of "risk pair" and develops an omnidirectional risk indicator (ORI), with mass-based superposition (MORI) for two-dimensional complex traffic scenarios.</div>
       </div>
+    </div>
 
-      <!-- Paper 002 -->
+    <!-- 2022 -->
+    <div class="year-header" data-year="2022">📅 2022</div>
+    <div class="paper-list">
       <div class="paper-card" data-tags="trajectory">
-        <div class="paper-title"><a href="https://dx.doi.org/10.1061/9780784484265.137" target="_blank">A Cooperative Lane-Changing Approach Considering the Motion Similarity between Vehicles</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.1061/9780784484265.137" target="_blank">A Cooperative Lane-Changing Approach Considering the Motion Similarity between Vehicles</a></div>
+          <span class="paper-cite-count">—</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-conference">Conference</span>
           <span class="paper-venue">CICTP 2022</span>
           <span>2022</span>
         </div>
         <div class="paper-authors"><strong>Bocheng An</strong>, Xu Qu</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.1061/9780784484265.137" target="_blank">📄 Publisher</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:zYLM7Y9cAGgC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:zYLM7Y9cAGgC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
         <div class="paper-abstract">Proposes a cooperative lane-changing approach using motion similarity between vehicles under connected and automated vehicle environment, improving IDM and MOBIL models.</div>
       </div>
 
-      <!-- Paper 001 -->
       <div class="paper-card" data-tags="traffic-flow,graph">
-        <div class="paper-title"><a href="https://dx.doi.org/10.19818/j.cnki.1671-1637.2022.03.006" target="_blank">Prediction of Traffic Swarm Movement Situation Based on Generalized Spatio-Temporal Graph Convolution Network</a></div>
+        <div class="paper-card-header">
+          <div class="paper-title"><a href="https://dx.doi.org/10.19818/j.cnki.1671-1637.2022.03.006" target="_blank">Prediction of Traffic Swarm Movement Situation Based on Generalized Spatio-Temporal Graph Convolution Network</a></div>
+          <span class="paper-cite-count">—</span>
+        </div>
         <div class="paper-meta">
+          <span class="paper-type type-journal">Journal</span>
           <span class="paper-venue">交通运输工程学报</span>
           <span>2022</span>
         </div>
         <div class="paper-authors">Xu Qu, Rui Gan, <strong>Bocheng An</strong>, Linheng Li, Zhijun Chen, Bin Ran</div>
         <div class="paper-links">
           <a class="paper-link" href="https://dx.doi.org/10.19818/j.cnki.1671-1637.2022.03.006" target="_blank">📄 Publisher</a>
-          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:Tyk-4Ss8FVUC" target="_blank">🎓 Google Scholar</a>
+          <a class="paper-link" href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user=BPZAsM0AAAAJ&citation_for_view=BPZAsM0AAAAJ:Tyk-4Ss8FVUC" target="_blank">🎓 Scholar</a>
         </div>
-        <span class="paper-toggle" onclick="this.previousElementSibling.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
+        <span class="paper-toggle" onclick="this.parentElement.querySelector('.paper-abstract').classList.toggle('show')">展开摘要 ▾</span>
         <div class="paper-abstract">Proposes the GSTGCN model for traffic speed prediction, reducing RMSE by 22.79%, MAE by 22.97%, and MAPE by 16.73% compared to ARIMA, with training time 75.71% shorter than LSTM.</div>
       </div>
-
     </div>
 
-    <!-- Google Scholar Link -->
-    <div style="margin-top: 32px; padding: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: center;">
-      <p style="color: var(--text-dim); font-size: 0.95em;">
-        🎓 查看完整论文列表和引用数据：
-        <a href="https://scholar.google.com/citations?user=BPZAsM0AAAAJ&hl=en" target="_blank" style="color: var(--accent);">Google Scholar 主页 →</a>
+    <!-- Footer note -->
+    <div style="margin-top: 32px; padding: 16px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: center;">
+      <p style="color: var(--text-dim); font-size: 0.85em;">
+        📊 引用数据来源：<a href="https://scholar.google.com/citations?user=BPZAsM0AAAAJ&hl=en" target="_blank" style="color: var(--accent);">Google Scholar</a> · 更新于 2026-06
       </p>
     </div>
   </div>
@@ -673,6 +872,14 @@ document.querySelectorAll('.research-tag').forEach(tag => {
         card.style.display = '';
       } else {
         card.style.display = 'none';
+      }
+    });
+    // Show/hide year headers based on visible papers
+    document.querySelectorAll('.year-header').forEach(header => {
+      const paperList = header.nextElementSibling;
+      if (paperList && paperList.classList.contains('paper-list')) {
+        const visibleCards = paperList.querySelectorAll('.paper-card:not([style*="display: none"])');
+        header.style.display = visibleCards.length > 0 ? '' : 'none';
       }
     });
   });
