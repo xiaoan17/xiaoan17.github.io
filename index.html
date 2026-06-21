@@ -106,19 +106,27 @@ a:hover { opacity: 0.8; }
 }
 
 /* Project Cards */
-.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.project-list { display: flex; flex-direction: column; gap: 12px; }
 .project-card {
   background: var(--surface); border: 1px solid var(--border); border-radius: 10px;
-  padding: 24px; transition: all 0.2s;
+  padding: 20px 24px; transition: all 0.2s; display: flex; align-items: center; gap: 20px;
 }
-.project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.project-card-name { font-size: 1.05em; font-weight: 600; margin-bottom: 8px; color: var(--text); display: flex; align-items: center; gap: 8px; }
-.project-card-name .lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.project-card:hover { border-color: var(--accent); transform: translateY(-1px); }
+.project-icon {
+  width: 48px; height: 48px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 1.5em;
+  background: rgba(79,195,247,0.08); border: 1px solid var(--border);
+}
+.project-content { flex: 1; min-width: 0; }
+.project-card-name { font-size: 1em; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.project-card-name .lang-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
 .lang-python { background: #3572A5; }
 .lang-javascript { background: #f1e05a; }
 .lang-typescript { background: #3178c6; }
-.project-card-desc { font-size: 0.88em; color: var(--text-dim); line-height: 1.6; margin-bottom: 12px; }
-.project-card-footer { display: flex; align-items: center; gap: 12px; font-size: 0.8em; color: var(--text-dim); }
+.lang-html { background: #e34c26; }
+.project-card-desc { font-size: 0.85em; color: var(--text-dim); line-height: 1.5; }
+.project-card-meta { display: flex; align-items: center; gap: 12px; font-size: 0.78em; color: var(--text-dim); margin-top: 6px; }
+.project-stars { color: var(--accent-gold); font-family: 'JetBrains Mono', monospace; }
 
 /* Research Section */
 .scholar-stats {
@@ -350,71 +358,89 @@ a:hover { opacity: 0.8; }
   <!-- ========== PROJECTS PAGE ========== -->
   <div id="page-projects" class="page">
     <div class="section-title"><span class="icon">🚀</span> 开源项目</div>
-    <div class="project-grid">
+    <div class="project-list">
 
-      <a class="project-card" href="https://github.com/xiaoan17/AI_teams" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-javascript"></span> AI Teams
-        </div>
-        <div class="project-card-desc">多 Agent 协作平台，实现 AI 团队角色分工与自动化工作流。</div>
-        <div class="project-card-footer">
-          <span>⭐ 1</span>
-          <span>JavaScript</span>
+      <a class="project-card" href="https://github.com/xiaoan17/AI_teams" target="_blank" style="display:flex">
+        <div class="project-icon">🤖</div>
+        <div class="project-content">
+          <div class="project-card-name">AI Teams</div>
+          <div class="project-card-desc">多 Agent 协作平台，实现 AI 团队角色分工与自动化工作流。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-javascript"></span> JavaScript
+            <span class="project-stars">⭐ 1</span>
+          </div>
         </div>
       </a>
 
-      <a class="project-card" href="https://github.com/xiaoan17/agent-teams-libs" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-typescript"></span> Agent Teams Libs
-        </div>
-        <div class="project-card-desc">AI Agent 团队角色库 — 人机双轨工作流，Claude+Codex 双引擎。定义从 0 到 1 的 AI 软件团队。</div>
-        <div class="project-card-footer">
-          <span>⭐ 0</span>
-          <span>TypeScript</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://github.com/xiaoan17/Spark_reader" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-typescript"></span> Spark Reader
-        </div>
-        <div class="project-card-desc">Spark Reader macOS beta 版本构建。</div>
-        <div class="project-card-footer">
-          <span>⭐ 1</span>
-          <span>TypeScript</span>
+      <a class="project-card" href="https://github.com/xiaoan17/agent-teams-libs" target="_blank" style="display:flex">
+        <div class="project-icon">👥</div>
+        <div class="project-content">
+          <div class="project-card-name">Agent Teams Libs</div>
+          <div class="project-card-desc">AI Agent 团队角色库 — 人机双轨工作流，Claude+Codex 双引擎。定义从 0 到 1 的 AI 软件团队。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-typescript"></span> TypeScript
+            <span class="project-stars">⭐ 0</span>
+          </div>
         </div>
       </a>
 
-      <a class="project-card" href="https://github.com/xiaoan17/webagent_cli" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-javascript"></span> WebAgent CLI
-        </div>
-        <div class="project-card-desc">Web Agent 命令行工具。</div>
-        <div class="project-card-footer">
-          <span>⭐ 0</span>
-          <span>JavaScript</span>
-        </div>
-      </a>
-
-      <a class="project-card" href="https://github.com/xiaoan17/OSRM_route_distance" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-python"></span> OSRM Route Distance
-        </div>
-        <div class="project-card-desc">基于 OSRM 实现经纬度间批量 driving route distance 估算，比直接经纬度计算更准确。</div>
-        <div class="project-card-footer">
-          <span>⭐ 1</span>
-          <span>Python</span>
+      <a class="project-card" href="https://github.com/xiaoan17/Spark_reader" target="_blank" style="display:flex">
+        <div class="project-icon">📖</div>
+        <div class="project-content">
+          <div class="project-card-name">Spark Reader</div>
+          <div class="project-card-desc">Spark Reader macOS beta 版本构建。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-typescript"></span> TypeScript
+            <span class="project-stars">⭐ 1</span>
+          </div>
         </div>
       </a>
 
-      <a class="project-card" href="https://github.com/xiaoan17/Tactics2d_Tutorial" target="_blank" style="display:block">
-        <div class="project-card-name">
-          <span class="lang-dot lang-python"></span> Tactics2D Tutorial
+      <a class="project-card" href="https://github.com/xiaoan17/webagent_cli" target="_blank" style="display:flex">
+        <div class="project-icon">🌐</div>
+        <div class="project-content">
+          <div class="project-card-name">WebAgent CLI</div>
+          <div class="project-card-desc">Web Agent 命令行工具。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-javascript"></span> JavaScript
+            <span class="project-stars">⭐ 0</span>
+          </div>
         </div>
-        <div class="project-card-desc">基于 Tactics2D 官方教程整理的常用 Python 脚本，含注释和结果图。</div>
-        <div class="project-card-footer">
-          <span>⭐ 0</span>
-          <span>Python</span>
+      </a>
+
+      <a class="project-card" href="https://github.com/xiaoan17/OSRM_route_distance" target="_blank" style="display:flex">
+        <div class="project-icon">🗺️</div>
+        <div class="project-content">
+          <div class="project-card-name">OSRM Route Distance</div>
+          <div class="project-card-desc">基于 OSRM 实现经纬度间批量 driving route distance 估算，比直接经纬度计算更准确。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-python"></span> Python
+            <span class="project-stars">⭐ 1</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/xiaoan17/Tactics2d_Tutorial" target="_blank" style="display:flex">
+        <div class="project-icon">🎓</div>
+        <div class="project-content">
+          <div class="project-card-name">Tactics2D Tutorial</div>
+          <div class="project-card-desc">基于 Tactics2D 官方教程整理的常用 Python 脚本，含注释和结果图。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-python"></span> Python
+            <span class="project-stars">⭐ 0</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://github.com/xiaoan17/famou_for_math" target="_blank" style="display:flex">
+        <div class="project-icon">📐</div>
+        <div class="project-content">
+          <div class="project-card-name">FAMOU for Math</div>
+          <div class="project-card-desc">数学建模相关代码。</div>
+          <div class="project-card-meta">
+            <span class="lang-dot lang-python"></span> Python
+            <span class="project-stars">⭐ 1</span>
+          </div>
         </div>
       </a>
 
