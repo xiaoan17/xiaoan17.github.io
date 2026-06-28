@@ -89,6 +89,19 @@ a:hover { opacity: 0.8; }
 }
 .section-title .icon { font-size: 1.2em; }
 
+/* About Block */
+.about-block {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; padding: 28px 32px; margin-bottom: 48px;
+}
+.about-lead { font-size: 1em; color: var(--text); line-height: 1.85; margin-bottom: 14px; }
+.about-lead strong { color: var(--accent); font-weight: 600; }
+.about-lead-zh { color: var(--text-dim); }
+.about-meta {
+  margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--border);
+  font-size: 0.88em; color: var(--text-dim); line-height: 1.9;
+}
+
 /* Blog Cards */
 .blog-list { display: flex; flex-direction: column; gap: 16px; }
 .blog-card {
@@ -222,6 +235,7 @@ a:hover { opacity: 0.8; }
   .social-links { justify-content: center; }
   .container { padding: 0 16px; }
   .nav-tab { padding: 14px 10px; font-size: 0.82em; }
+  .about-block { padding: 22px 20px; }
 }
 </style>
 </head>
@@ -277,6 +291,23 @@ a:hover { opacity: 0.8; }
         <div class="hero-right">
           <div class="hero-avatar"><img src="avatar.png" alt="安博成"></div>
         </div>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="section-title"><span class="icon">👋</span> About</div>
+    <div class="about-block">
+      <p class="about-lead">
+        <strong>Personal blog &amp; portfolio of Bocheng An (安博成)</strong> — PhD student at Southeast University, researching AI for intelligent transportation systems.
+      </p>
+      <p class="about-lead about-lead-zh">
+        个人博客与作品集。我是东南大学交通运输工程博士生，研究方向为智能交通系统中的 AI 与数据科学，专注于交通流预测、车辆轨迹预测、驾驶风险评估与轨迹规划。
+      </p>
+      <div class="about-meta">
+        <span class="mono">📍 南京</span> ·
+        <span class="mono">🎓 东南大学交通学院</span> ·
+        <span class="mono">🔬 智能交通 / AI for ITS</span> ·
+        <span class="mono">👨‍🏫 导师：曲栩 教授</span>
       </div>
     </div>
 
