@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 领域 Top 20 经典论文清单 | 安博成</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --parchment: #f5f4ed; --ivory: #faf9f5;
+  --brand: #1B365D;
+  --near-black: #141413; --dark-warm: #3d3d3a; --olive: #504e49; --stone: #6b6a64;
+  --border: #e8e6dc; --border-soft: #e5e3d8; --tag-bg: #E4ECF5;
+  --serif: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+  --sans: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background: var(--tag-bg); color: var(--brand); }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans); background: var(--parchment); color: var(--dark-warm);
+  line-height: 1.75; letter-spacing: 0.02em;
+}
+.mono { font-family: var(--mono); letter-spacing: 0; }
+a { color: var(--brand); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+.container { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 20px 0;
+  font-family: var(--mono); font-size: 0.8em; color: var(--stone); letter-spacing: 0;
+}
+.back-link:hover { color: var(--brand); text-decoration: none; }
+.article-header { padding: 36px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+.article-title {
+  font-family: var(--serif); font-weight: 500; font-size: 1.9em; color: var(--near-black);
+  margin-bottom: 12px; line-height: 1.35; letter-spacing: 0.02em;
+}
+.article-meta { font-family: var(--mono); color: var(--stone); font-size: 0.78em; letter-spacing: 0; }
+.article-body h2 {
+  font-family: var(--serif); font-weight: 500; font-size: 1.3em; color: var(--brand);
+  margin: 40px 0 16px; letter-spacing: 0.02em;
+}
+.article-body p { margin-bottom: 16px; }
+.article-body strong { color: var(--near-black); font-weight: 500; }
+.article-body blockquote {
+  border-left: 2px solid var(--brand); padding: 8px 16px; margin: 20px 0;
+  background: var(--ivory); border-radius: 0 6px 6px 0; color: var(--olive);
+}
+.paper-list { list-style: none; padding: 0; }
+.paper-item {
+  padding: 16px 0; border-bottom: 1px solid var(--border-soft);
+  display: flex; gap: 14px; align-items: baseline;
+}
+.paper-item:last-child { border-bottom: none; }
+.paper-num {
+  font-family: var(--mono); font-size: 0.78em; color: var(--stone);
+  min-width: 26px; flex-shrink: 0;
+}
+.paper-title { font-weight: 500; color: var(--near-black); line-height: 1.5; }
+.paper-info { font-size: 0.82em; color: var(--stone); margin-top: 4px; line-height: 1.5; }
+.article-footer { margin-top: 56px; padding: 28px 0; border-top: 1px solid var(--border); text-align: center; }
+.site-footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); color: var(--stone); font-size: 0.8em; }
+@media (max-width: 768px) {
+  .container { padding: 0 20px; }
+  .article-title { font-size: 1.55em; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <a class="back-link" href="index.html#blog">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">AI 领域 Top 20 经典论文清单</h1>
+    <div class="article-meta">
+      ✍️ 安博成 · 📅 2026-08-04 · 🏷️ AI, 论文, 书单
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p>整理自我的 Zotero 收藏夹「10_AI top 20 paper」：从 GPU 通用计算到 AlexNet、Transformer，再到 GPT 系列与 Scaling Law，这 20 篇文章（含一篇博客）基本勾勒出了现代 AI 的发展主线。按发表年份排序。</p>
+
+    <h2>2004</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">01</span>
+        <div>
+          <div class="paper-title"><a href="https://graphics.stanford.edu/papers/brookgpu/brookgpu.pdf">Brook for GPUs: Stream Computing on Graphics Hardware</a></div>
+          <div class="paper-info">Ian Buck, Tim Foley, Daniel Horn, Jeremy Sugerman, Kayvon Fatahalian, Mike Houston, Pat Hanrahan · 2004 · ACM SIGGRAPH</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2009</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">02</span>
+        <div>
+          <div class="paper-title"><a href="https://www.image-net.org/static_files/papers/imagenet_cvpr09.pdf">ImageNet: A Large-Scale Hierarchical Image Database</a></div>
+          <div class="paper-info">Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, Li Fei-Fei · 2009 · CVPR</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2012</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">03</span>
+        <div>
+          <div class="paper-title"><a href="https://proceedings.neurips.cc/paper_files/paper/2012/file/c399862d3b9d6b76c8436e924a68c45b-Paper.pdf">ImageNet Classification with Deep Convolutional Neural Networks</a></div>
+          <div class="paper-info">Alex Krizhevsky, Ilya Sutskever, Geoffrey E. Hinton · 2012 · NeurIPS</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2014</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">04</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1409.3215">Sequence to Sequence Learning with Neural Networks</a></div>
+          <div class="paper-info">Ilya Sutskever, Oriol Vinyals, Quoc V. Le · 2014 · NeurIPS</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">05</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1409.0473">Neural Machine Translation by Jointly Learning to Align and Translate</a></div>
+          <div class="paper-info">Dzmitry Bahdanau, Kyunghyun Cho, Yoshua Bengio · 2014 · ICLR 2015</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2015</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">06</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1503.02531">Distilling the Knowledge in a Neural Network</a></div>
+          <div class="paper-info">Geoffrey Hinton, Oriol Vinyals, Jeff Dean · 2015 · NeurIPS Workshop</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">07</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></div>
+          <div class="paper-info">Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun · 2015 · CVPR 2016</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2017</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">08</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1701.06538">Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer</a></div>
+          <div class="paper-info">Noam Shazeer, Azalia Mirhoseini, Krzysztof Maziarz, Andy Davis, Quoc V. Le, Geoffrey Hinton, Jeff Dean · 2017 · ICLR</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">09</span>
+        <div>
+          <div class="paper-title"><a href="https://proceedings.neurips.cc/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html">Attention Is All You Need</a></div>
+          <div class="paper-info">Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin · 2017 · NeurIPS</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">10</span>
+        <div>
+          <div class="paper-title"><a href="https://discovery.ucl.ac.uk/id/eprint/10045895/">Mastering the Game of Go without Human Knowledge</a></div>
+          <div class="paper-info">David Silver, Julian Schrittwieser, Karen Simonyan, et al. · 2017 · Nature</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2018</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">11</span>
+        <div>
+          <div class="paper-title"><a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">Improving Language Understanding by Generative Pre-Training</a></div>
+          <div class="paper-info">Alec Radford, Karthik Narasimhan, Tim Salimans, Ilya Sutskever · 2018 · OpenAI</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">12</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</a></div>
+          <div class="paper-info">Jacob Devlin, Ming-Wei Chang, Kenton Lee, Kristina Toutanova · 2018 · NAACL 2019</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2019</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">13</span>
+        <div>
+          <div class="paper-title"><a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a></div>
+          <div class="paper-info">Alec Radford, Jeffrey Wu, Rewon Child, David Luan, Dario Amodei, Ilya Sutskever · 2019 · OpenAI</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">14</span>
+        <div>
+          <div class="paper-title"><a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a></div>
+          <div class="paper-info">Richard S. Sutton · 2019 · 博客文章</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2020</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">15</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2001.08361">Scaling Laws for Neural Language Models</a></div>
+          <div class="paper-info">Jared Kaplan, Sam McCandlish, Tom Henighan, et al. · 2020 · arXiv</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">16</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2005.14165">Language Models are Few-Shot Learners</a></div>
+          <div class="paper-info">Tom B. Brown, Benjamin Mann, Nick Ryder, et al. · 2020 · NeurIPS</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2021</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">17</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2106.09685">LoRA: Low-Rank Adaptation of Large Language Models</a></div>
+          <div class="paper-info">Edward J. Hu, Yelong Shen, Phillip Wallis, Zeyuan Allen-Zhu, Yuanzhi Li, Shean Wang, Lu Wang, Weizhu Chen · 2021 · ICLR 2022</div>
+        </div>
+      </li>
+    </ul>
+
+    <h2>2022</h2>
+    <ul class="paper-list">
+      <li class="paper-item">
+        <span class="paper-num">18</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2201.11903">Chain-of-Thought Prompting Elicits Reasoning in Large Language Models</a></div>
+          <div class="paper-info">Jason Wei, Xuezhi Wang, Dale Schuurmans, et al. · 2022 · NeurIPS</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">19</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2203.02155">Training Language Models to Follow Instructions with Human Feedback</a></div>
+          <div class="paper-info">Long Ouyang, Jeffrey Wu, Xu Jiang, et al. · 2022 · NeurIPS</div>
+        </div>
+      </li>
+      <li class="paper-item">
+        <span class="paper-num">20</span>
+        <div>
+          <div class="paper-title"><a href="https://arxiv.org/abs/2203.15556">Training Compute-Optimal Large Language Models</a></div>
+          <div class="paper-info">Jordan Hoffmann, Sebastian Borgeaud, Arthur Mensch, et al. · 2022 · NeurIPS</div>
+        </div>
+      </li>
+    </ul>
+
+    <blockquote>这份清单也是一条学习路径：从数据（ImageNet）到算力（Brook for GPUs），到架构（ResNet、Transformer），再到规模化的胜利（GPT 系列、Scaling Laws、Chinchilla）与对齐（InstructGPT）。</blockquote>
+  </div>
+
+  <div class="article-footer">
+    <a href="index.html#blog">← 返回博客列表</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博成 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+</body>
+</html>
