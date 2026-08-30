@@ -34,5 +34,10 @@ Personal blog & portfolio — PhD student at Southeast University, researching A
 
 ## 站点说明 / About this site
 
-这是一个使用纯静态 HTML/CSS 构建的个人主页，托管在 GitHub Pages 上。
-无前端构建步骤，所见即所得；欢迎通过 Issue 或邮件交流。
+这是一个纯静态个人主页，托管在 GitHub Pages 上，无前端构建步骤。
+
+- 页面骨架：`index.html`；样式：`css/style.css`
+- **日常维护只改 `js/data/` 下的数据文件**：博客 `blog.js`、项目 `projects.js`、论文 `papers.js`、推荐 `recommend.js`（各文件头部有字段说明）
+- 渲染逻辑：`js/render.js`；导航与筛选交互：`js/main.js`
+
+欢迎通过 Issue 或邮件交流。
