@@ -6,14 +6,13 @@ Personal blog & portfolio — PhD student at Southeast University, researching A
 
 ## 关于我 / About
 
-- 🎓 **身份**：东南大学交通学院 博士研究生
-- 👨‍🏫 **导师**：曲栩 教授
+- 🎓 **身份**：东南大学 交通运输工程 博士研究生
 - 🔬 **研究方向**：
-  - 交通流预测（Traffic Flow Prediction）
   - 车辆轨迹预测（Vehicle Trajectory Prediction）
+  - 交通流预测（Traffic Flow Prediction）
   - 驾驶风险评估（Driving Risk Assessment）
   - 轨迹规划（Trajectory Planning）
-- 📍 **坐标**：南京
+  - LLM × 智能交通（LLM for ITS）
 - 🧠 **关键词**：AI for ITS · 时空数据建模 · 深度学习 · 智能体系统
 
 ## 在这里我会写 / What I write
@@ -37,7 +36,7 @@ Personal blog & portfolio — PhD student at Southeast University, researching A
 这是一个纯静态个人主页，托管在 GitHub Pages 上，无前端构建步骤。
 
 - 页面骨架：`index.html`；样式：`css/style.css`
-- **日常维护只改 `js/data/` 下的数据文件**：博客 `blog.js`、项目 `projects.js`、论文 `papers.js`、推荐 `recommend.js`（各文件头部有字段说明）
+- **日常维护只改 `js/data/` 下的数据文件**：博客 `blog.js`、项目 `projects.js`、推荐 `recommend.js`（各文件头部有字段说明）
 - 渲染逻辑：`js/render.js`；导航与筛选交互：`js/main.js`
 
 欢迎通过 Issue 或邮件交流。
