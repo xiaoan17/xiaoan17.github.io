@@ -62,14 +62,43 @@
 
   /* ---------- 开源项目 ---------- */
 
+  function projectMeta(p) {
+    var meta = [];
+    if (p.lang) meta.push(p.lang);
+    if (p.stars !== null && p.stars !== undefined) meta.push('★ ' + p.stars);
+    if (p.updated) meta.push('更新于 ' + p.updated);
+    return meta;
+  }
+
+  function featuredCardHTML(p) {
+    var img = p.img
+      ? '<div class="featured-card-img"><img src="' + esc(p.img) + '" alt="' + esc(p.name) + ' 产品截图" loading="lazy"></div>'
+      : '';
+    return '<a class="featured-card" href="' + esc(p.url) + '" target="_blank">' +
+      img +
+      '<div class="featured-card-body">' +
+      '<div class="project-card-name">' + esc(p.name) + '</div>' +
+      '<div class="project-card-desc">' + esc(p.desc) + '</div>' +
+      metaHTML(projectMeta(p)) +
+      '</div>' +
+      '</a>';
+  }
+
   function renderProjects() {
+    var projects = window.PROJECTS || [];
+    var featured = projects.filter(function (p) { return p.featured; });
+    var rest = projects.filter(function (p) { return !p.featured; });
+
+    var featuredBox = document.getElementById('project-featured');
+    if (featuredBox) featuredBox.innerHTML = featured.map(featuredCardHTML).join('');
+
+    var subhead = document.getElementById('project-more-subhead');
+    if (subhead) subhead.style.display = (featured.length && rest.length) ? '' : 'none';
+
     var list = document.getElementById('project-list');
     if (!list) return;
-    list.innerHTML = (window.PROJECTS || []).map(function (p) {
-      var meta = [];
-      if (p.lang) meta.push(p.lang);
-      if (p.stars !== null && p.stars !== undefined) meta.push('★ ' + p.stars);
-      return projectCardHTML({ url: p.url, name: p.name, desc: p.desc, meta: meta });
+    list.innerHTML = rest.map(function (p) {
+      return projectCardHTML({ url: p.url, name: p.name, desc: p.desc, meta: projectMeta(p) });
     }).join('');
   }
 
