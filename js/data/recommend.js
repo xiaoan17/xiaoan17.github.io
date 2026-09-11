@@ -1,6 +1,7 @@
 // 推荐数据 —— 新条目加在对应数组最前面
 // 字段: name 名称; url 链接; desc 简介;
 //       meta 底部灰色小字数组(工具类一般放域名,Skills 类放语言和 star 数)
+// 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.RECOMMEND_TOOLS = [
   {
     name: "CC Switch",

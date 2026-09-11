@@ -3,6 +3,7 @@
 //       lang 主要语言(可选); stars star 数,0 显示 "★ 0",null 则不显示(可选)
 //       updated 最近更新月份,如 "2026-09"(可选)
 //       featured true 时以截图大卡展示,需配 img(截图路径,放在 images/projects/)
+// 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.PROJECTS = [
   {
     name: "nootch",

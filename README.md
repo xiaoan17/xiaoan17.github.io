@@ -37,6 +37,7 @@ Personal blog & portfolio — PhD student at Southeast University, researching A
 
 - 页面骨架：`index.html`；样式：`css/style.css`
 - **日常维护只改 `js/data/` 下的数据文件**：博客 `blog.js`、项目 `projects.js`、推荐 `recommend.js`（各文件头部有字段说明）
+- **文案约定**：卡片简介（`desc`）控制在两行以内（约 60-90 字），超长会被 CSS 自动截断为两行，保证卡片高度一致、排列稳定
 - 渲染逻辑：`js/render.js`；导航与筛选交互：`js/main.js`
 
 欢迎通过 Issue 或邮件交流。
