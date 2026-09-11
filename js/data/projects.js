@@ -25,6 +25,14 @@ window.PROJECTS = [
     img: "images/projects/dashboard.png"
   },
   {
+    name: "nootch",
+    url: "https://github.com/xiaoan17/nootch",
+    desc: "macOS 屏幕边缘常驻的 AI 编码用量圆点（DeepanshuMishraa/nootch 的二次开发版）：悬停即可查看今日 / 7 天 / 30 天的费用、tokens、sessions 与 Top 模型。内置 Swift 原生同步引擎，本地解析 Claude Code / Codex / Kimi Code 等工具日志并上报 vibecafe.ai，零钥匙串弹窗、无需 Node 环境。",
+    lang: "Swift",
+    stars: 0,
+    updated: "2026-09"
+  },
+  {
     name: "G3M Sidekeys",
     url: "https://github.com/xiaoan17/g3m-sidekeys",
     desc: "极简 macOS 菜单栏工具：把 HECATE G3M PRO 等无 macOS 驱动的鼠标侧键映射为 Cmd+C / Cmd+V，HID 层实现，纯用户态无内核扩展。",
