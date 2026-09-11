@@ -111,7 +111,11 @@ a.blog-card:hover .blog-card-title, a.project-card:hover .project-card-name { co
   font-family: var(--mono); font-size: 0.72em; color: var(--stone); letter-spacing: 0;
   display: flex; flex-wrap: wrap; gap: 8px 14px;
 }
-.blog-card-desc, .project-card-desc { font-size: 0.88em; color: var(--olive); line-height: 1.6; margin-top: 6px; }
+.blog-card-desc, .project-card-desc {
+  font-size: 0.88em; color: var(--olive); line-height: 1.6; margin-top: 6px;
+  display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
 .blog-card-tags { display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
 .tag {
   font-size: 0.7em; padding: 2px 8px; border-radius: 3px;

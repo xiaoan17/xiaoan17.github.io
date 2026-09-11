@@ -7,7 +7,7 @@ window.PROJECTS = [
   {
     name: "nootch",
     url: "https://github.com/xiaoan17/nootch",
-    desc: "macOS 屏幕边缘常驻的 AI 编码用量圆点（DeepanshuMishraa/nootch 的二次开发版）：悬停即可查看今日 / 7 天 / 30 天的费用、tokens、sessions 与 Top 模型。内置 Swift 原生同步引擎，本地解析 Claude Code / Codex / Kimi Code 等工具日志并上报 vibecafe.ai，零钥匙串弹窗、无需 Node 环境。",
+    desc: "macOS 屏幕边缘常驻的 AI 编码用量圆点：悬停查看今日 / 7 天 / 30 天的费用、tokens、Top 模型。内置 Swift 原生同步引擎，零钥匙串弹窗。",
     lang: "Swift",
     stars: 0,
     updated: "2026-09",
