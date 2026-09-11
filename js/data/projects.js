@@ -5,6 +5,16 @@
 //       featured true 时以截图大卡展示,需配 img(截图路径,放在 images/projects/)
 window.PROJECTS = [
   {
+    name: "nootch",
+    url: "https://github.com/xiaoan17/nootch",
+    desc: "macOS 屏幕边缘常驻的 AI 编码用量圆点（DeepanshuMishraa/nootch 的二次开发版）：悬停即可查看今日 / 7 天 / 30 天的费用、tokens、sessions 与 Top 模型。内置 Swift 原生同步引擎，本地解析 Claude Code / Codex / Kimi Code 等工具日志并上报 vibecafe.ai，零钥匙串弹窗、无需 Node 环境。",
+    lang: "Swift",
+    stars: 0,
+    updated: "2026-09",
+    featured: true,
+    img: "images/projects/nootch.png"
+  },
+  {
     name: "Transport Journal Match",
     url: "https://github.com/xiaoan17/transport-journal-match",
     desc: "交通运输领域投稿期刊匹配桌面工具：输入论文标题和摘要，基于本地语料库的语义相似度推荐目标期刊，并给出每本期刊的证据论文。向量化与推荐完全离线运行，不依赖远程 Embedding 服务。",
@@ -23,14 +33,6 @@ window.PROJECTS = [
     updated: "2026-09",
     featured: true,
     img: "images/projects/dashboard.png"
-  },
-  {
-    name: "nootch",
-    url: "https://github.com/xiaoan17/nootch",
-    desc: "macOS 屏幕边缘常驻的 AI 编码用量圆点（DeepanshuMishraa/nootch 的二次开发版）：悬停即可查看今日 / 7 天 / 30 天的费用、tokens、sessions 与 Top 模型。内置 Swift 原生同步引擎，本地解析 Claude Code / Codex / Kimi Code 等工具日志并上报 vibecafe.ai，零钥匙串弹窗、无需 Node 环境。",
-    lang: "Swift",
-    stars: 0,
-    updated: "2026-09"
   },
   {
     name: "G3M Sidekeys",
