@@ -28,7 +28,7 @@ body {
 .mono { font-family: var(--mono); letter-spacing: 0; }
 a { color: var(--brand); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.container { max-width: 720px; margin: 0 auto; padding: 0 32px; }
+.container { max-width: clamp(720px, 62vw, 880px); margin: 0 auto; padding: 0 32px; }
 .back-link {
   display: inline-flex; align-items: center; gap: 6px; padding: 20px 0;
   font-family: var(--mono); font-size: 0.8em; color: var(--stone); letter-spacing: 0;
