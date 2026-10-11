@@ -4,10 +4,10 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.BLOG_POSTS = [
   {
-    title: "苦涩的教训:70 年 AI 研究最硬核的一课",
+    title: "The Bitter Lesson(苦涩的教训)原文 + 解读",
     url: "blog_bitter_lesson.html",
     date: "2026-10-12",
-    desc: "重读 Sutton 2019 年经典短文《The Bitter Lesson》:70 年 AI 研究最大的教训是,能 scale 计算的通用方法(搜索 + 学习)最终必然胜过一切依赖人类知识的方法。",
+    desc: "Sutton 2019 年经典短文:70 年 AI 研究最大的教训是,能 scale 计算的通用方法(搜索 + 学习)最终必然胜过一切依赖人类知识的方法。附英文原文。",
     tags: ["AI", "RL", "Scaling", "经典文章"]
   },
   {

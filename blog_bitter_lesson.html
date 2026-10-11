@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>苦涩的教训:70 年 AI 研究最硬核的一课 | 安博成</title>
+<title>The Bitter Lesson(苦涩的教训)原文 + 解读 | 安博成</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,52 +45,33 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--serif); font-weight: 500; font-size: 1.3em; color: var(--brand);
   margin: 40px 0 16px; letter-spacing: 0.02em;
 }
-.article-body h3 {
-  font-family: var(--serif); font-weight: 500; font-size: 1.05em; color: var(--near-black);
-  margin: 26px 0 10px; letter-spacing: 0.02em;
-}
 .article-body p { margin-bottom: 16px; }
 .article-body strong { color: var(--near-black); font-weight: 500; }
-.article-body ul, .article-body ol { margin: 0 0 16px 1.4em; }
+.article-body ol { margin: 0 0 16px 1.4em; }
 .article-body li { margin-bottom: 8px; }
 .article-body blockquote {
   border-left: 2px solid var(--brand); padding: 8px 16px; margin: 20px 0;
   background: var(--ivory); border-radius: 0 6px 6px 0; color: var(--olive);
 }
-.article-body table {
-  width: 100%; border-collapse: collapse; margin: 20px 0;
-  font-size: 0.92em; background: var(--ivory);
-  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
+/* 原文区块 */
+.original {
+  background: var(--ivory); border: 1px solid var(--border); border-radius: 6px;
+  padding: 20px 24px; margin: 16px 0 24px;
+  font-size: 0.94em; line-height: 1.8; color: var(--olive);
 }
-.article-body th, .article-body td {
-  padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border-soft);
-  vertical-align: top; line-height: 1.6;
+.original p { margin-bottom: 14px; }
+.original p:last-child { margin-bottom: 0; }
+.original em { font-style: italic; }
+.original-src {
+  font-family: var(--mono); font-size: 0.75em; color: var(--stone);
+  margin-top: 14px; padding-top: 12px; border-top: 1px dashed var(--border);
 }
-.article-body th {
-  font-family: var(--mono); font-weight: 700; font-size: 0.82em;
-  color: var(--brand); background: var(--tag-bg);
-}
-.article-body tr:last-child td { border-bottom: none; }
-.case-list { list-style: none; padding: 0; }
-.case-item {
-  padding: 16px 0; border-bottom: 1px solid var(--border-soft);
-  display: flex; gap: 14px; align-items: baseline;
-}
-.case-item:last-child { border-bottom: none; }
-.case-num {
-  font-family: var(--mono); font-size: 0.78em; color: var(--stone);
-  min-width: 26px; flex-shrink: 0;
-}
-.case-title { font-weight: 500; color: var(--near-black); line-height: 1.5; }
-.case-info { font-size: 0.88em; color: var(--olive); margin-top: 4px; line-height: 1.6; }
-.case-info em { color: var(--brand); font-style: normal; font-weight: 500; }
 .article-footer { margin-top: 56px; padding: 28px 0; border-top: 1px solid var(--border); text-align: center; }
 .site-footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); color: var(--stone); font-size: 0.8em; }
 @media (max-width: 768px) {
   .container { padding: 0 20px; }
   .article-title { font-size: 1.55em; }
-  .article-body table { font-size: 0.85em; }
-  .article-body th, .article-body td { padding: 8px 10px; }
+  .original { padding: 16px 18px; font-size: 0.9em; }
 }
 </style>
 </head>
@@ -100,106 +81,70 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   <a class="back-link" href="index.html#blog">← 返回博客</a>
 
   <div class="article-header">
-    <h1 class="article-title">苦涩的教训:70 年 AI 研究最硬核的一课</h1>
+    <h1 class="article-title">The Bitter Lesson(苦涩的教训)原文 + 解读</h1>
     <div class="article-meta">
       ✍️ 安博成 · 📅 2026-10-12 · 🏷️ AI, RL, Scaling, 经典文章
     </div>
   </div>
 
   <div class="article-body">
-    <p>2019 年 3 月,强化学习之父 <strong>Richard S. Sutton</strong> 在自己的主页上发了一篇不到 1500 字的短文 —— <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">《The Bitter Lesson》(苦涩的教训)</a>。这篇短文后来成了 AI 圈被引用最多的"博客"之一,也几乎预言了之后 GPT 系列、Scaling Law 乃至整个大模型时代的主线。</p>
 
-    <p>我在整理 <a href="blog_ai_top20_papers.html">AI Top 20 经典论文清单</a> 时把它列为第 14 篇(也是清单里唯一一篇非论文)。最近重读了一遍,把核心内容整理成这篇笔记。</p>
+    <h2>一、原文</h2>
 
-    <h2>一句话总结</h2>
+    <div class="original">
+      <p><strong>The Bitter Lesson</strong><br>
+      Rich Sutton · March 13, 2019</p>
 
-    <blockquote>
-      70 年 AI 研究最大的教训是:<strong>能利用大规模计算的通用方法(搜索 + 学习),最终会以巨大优势胜过一切依赖人类领域知识的方法</strong>——而且这个胜利是"苦涩"的,因为它一次次击败了研究者偏爱的、以人为中心的路径。
-    </blockquote>
+      <p>The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin. The ultimate reason for this is Moore's law, or rather its generalization of continued exponentially falling cost per unit of computation. Most AI research has been conducted as if the computation available to the agent were constant (in which case leveraging human knowledge would be one of the only ways to improve performance) but, over a slightly longer time than a typical research project, massively more computation inevitably becomes available. Seeking an improvement that makes a difference in the shorter term, researchers seek to leverage their human knowledge of the domain, but the only thing that matters in the long run is the leveraging of computation. These two need not run counter to each other, but in practice they tend to. Time spent on one is time not spent on the other. There are psychological commitments to investment in one approach or the other. And the human-knowledge approach tends to complicate methods in ways that make them less suited to taking advantage of general methods leveraging computation. There were many examples of AI researchers' belated learning of this bitter lesson, and it is instructive to review some of the most prominent.</p>
 
-    <h2>为什么会"苦涩"?</h2>
+      <p>In computer chess, the methods that defeated the world champion, Kasparov, in 1997, were based on massive, deep search. At the time, this was looked upon with dismay by the majority of computer-chess researchers who had pursued methods that leveraged human understanding of the special structure of chess. When a simpler, search-based approach with special hardware and software proved vastly more effective, these human-knowledge-based chess researchers were not good losers. They said that "brute force" search may have won this time, but it was not a general strategy, and anyway it was not how people played chess. These researchers wanted methods based on human input to win and were disappointed when they did not.</p>
 
-    <p>Sutton 总结了这条教训在历史上反复上演的四步模式:</p>
+      <p>A similar pattern of research progress was seen in computer Go, only delayed by a further 20 years. Enormous initial efforts went into avoiding search by taking advantage of human knowledge, or of the special features of the game, but all those efforts proved irrelevant, or worse, once search was applied effectively at scale. Also important was the use of learning by self play to learn a value function (as it was in many other games and even in chess, although learning did not play a big role in the 1997 program that first beat a world champion). Learning by self play, and learning in general, is like search in that it enables massive computation to be brought to bear. Search and learning are the two most important classes of techniques for utilizing massive amounts of computation in AI research. In computer Go, as in computer chess, researchers' initial effort was directed towards utilizing human understanding (so that less search was needed) and only much later was much greater success had by embracing search and learning.</p>
 
+      <p>In speech recognition, there was an early competition, sponsored by DARPA, in the 1970s. Entrants included a host of special methods that took advantage of human knowledge—knowledge of words, of phonemes, of the human vocal tract, etc. On the other side were newer methods that were more statistical in nature and did much more computation, based on hidden Markov models (HMMs). Again, the statistical methods won out over the human-knowledge-based methods. This led to a major change in all of natural language processing, gradually over decades, where statistics and computation came to dominate the field. The recent rise of deep learning in speech recognition is the most recent step in this consistent direction. Deep learning methods rely even less on human knowledge, and use even more computation, together with learning on huge training sets, to produce dramatically better speech recognition systems. As in the games, researchers always tried to make systems that worked the way the researchers thought their own minds worked—they tried to put that knowledge in their systems—but it proved ultimately counterproductive, and a colossal waste of researcher's time, when, through Moore's law, massive computation became available and a means was found to put it to good use.</p>
+
+      <p>In computer vision, there has been a similar pattern. Early methods conceived of vision as searching for edges, or generalized cylinders, or in terms of SIFT features. But today all this is discarded. Modern deep-learning neural networks use only the notions of convolution and certain kinds of invariances, and perform much better.</p>
+
+      <p>This is a big lesson. As a field, we still have not thoroughly learned it, as we are continuing to make the same kind of mistakes. To see this, and to effectively resist it, we have to understand the appeal of these mistakes. We have to learn the bitter lesson that building in how we think we think does not work in the long run. The bitter lesson is based on the historical observations that 1) AI researchers have often tried to build knowledge into their agents, 2) this always helps in the short term, and is personally satisfying to the researcher, but 3) in the long run it plateaus and even inhibits further progress, and 4) breakthrough progress eventually arrives by an opposing approach based on scaling computation by search and learning. The eventual success is tinged with bitterness, and often incompletely digested, because it is success over a favored, human-centric approach.</p>
+
+      <p>One thing that should be learned from the bitter lesson is the great power of general purpose methods, of methods that continue to scale with increased computation even as the available computation becomes very great. The two methods that seem to scale arbitrarily in this way are <em>search</em> and <em>learning</em>.</p>
+
+      <p>The second general point to be learned from the bitter lesson is that the actual contents of minds are tremendously, irredeemably complex; we should stop trying to find simple ways to think about the contents of minds, such as simple ways to think about space, objects, multiple agents, or symmetries. All these are part of the arbitrary, intrinsically-complex, outside world. They are not what should be built in, as their complexity is endless; instead we should build in only the meta-methods that can find and capture this arbitrary complexity. Essential to these methods is that they can find good approximations, but the search for them should be by our methods, not by us. We want AI agents that can discover like we can, not which contain what we have discovered. Building in our discoveries only makes it harder to see how the discovering process can be done.</p>
+
+      <div class="original-src">Source: <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">incompleteideas.net/IncIdeas/BitterLesson.html</a></div>
+    </div>
+
+    <h2>二、解读</h2>
+
+    <p><strong>核心论点:</strong>70 年 AI 研究最大的教训是——能利用大规模计算的<strong>通用方法</strong>(搜索 + 学习),最终会以巨大优势胜过一切依赖人类领域知识的方法。根本原因是摩尔定律:单位算力成本持续指数下降,长期看算力必然过剩。</p>
+
+    <p><strong>"苦涩"的四步模式:</strong></p>
     <ol>
-      <li>AI 研究者反复尝试把<strong>人类知识</strong>内置进 agent;</li>
-      <li>这<strong>短期有效</strong>,而且让研究者个人很有成就感;</li>
-      <li>但长期会<strong>触顶、甚至阻碍</strong>进一步进展;</li>
-      <li>突破性进展最终都来自对立面——<strong>通过搜索和学习来 scale 计算</strong>。</li>
+      <li>研究者反复尝试把人类知识内置进 agent;</li>
+      <li>短期有效,且让研究者个人有成就感;</li>
+      <li>长期触顶,甚至阻碍进一步进展;</li>
+      <li>突破性进展最终都来自对立面——通过搜索和学习 scale 计算。</li>
     </ol>
 
-    <p>根本原因是<strong>摩尔定律</strong>:单位算力成本持续指数下降。大多数研究假设"算力恒定",在这个前提下灌入人类知识似乎是唯一出路;但只要时间尺度稍长,可用算力必然指数级增长,届时唯一重要的就是<strong>对计算的利用</strong>。更麻烦的是,人类知识路线会让方法变复杂,反而更难利用通用计算——两条路在实践中往往互斥。</p>
+    <p><strong>四个历史案例:</strong></p>
+    <ol>
+      <li><strong>国际象棋(1997):</strong>Deep Blue 靠大规模深度搜索击败 Kasparov;主流象棋研究者当时追求的是"利用人类对棋局结构的理解",对暴力搜索获胜很不满。</li>
+      <li><strong>围棋(晚 20 年):</strong>早期大量精力用于避免搜索、利用棋形特征,这些努力在搜索被 scale 后全部作废;另一关键是 self-play 学习价值函数。</li>
+      <li><strong>语音识别(1970s → 今):</strong>DARPA 竞赛中,基于音素/声道等人类知识的方法输给了基于 HMM 的统计方法;近年深度学习是同一方向的延续——更少知识、更多计算、更大数据。</li>
+      <li><strong>计算机视觉:</strong>早期的边缘检测、广义圆柱、SIFT 特征全部被抛弃,现代网络只用卷积 + 不变性,表现好得多。</li>
+    </ol>
 
-    <p>成功之所以"苦涩",是因为它战胜的是研究者偏爱的方法,而且这种胜利常常没被完全消化。</p>
-
-    <h2>四个历史案例:同一模式反复上演</h2>
-
-    <ul class="case-list">
-      <li class="case-item">
-        <span class="case-num">01</span>
-        <div>
-          <div class="case-title">国际象棋(1997)</div>
-          <div class="case-info">击败 Kasparov 的 Deep Blue 基于<em>大规模深度搜索</em>。当时主流电脑象棋研究者追求的是"利用人类对棋局特殊结构的理解",对暴力搜索获胜很不满——"这次赢了,但不是通用策略,也不是人下棋的方式"。他们希望基于人类输入的方法赢,结果失望了。</div>
-        </div>
-      </li>
-      <li class="case-item">
-        <span class="case-num">02</span>
-        <div>
-          <div class="case-title">围棋(晚了 20 年)</div>
-          <div class="case-info">早期投入巨大精力去<em>避免搜索</em>,依赖人类知识和棋形特征——这些努力在搜索被大规模有效应用后全部作废,甚至更糟。另一个关键是<em>自我对弈学习(self-play)</em>价值函数。搜索和学习,是利用海量计算的两大类技术。</div>
-        </div>
-      </li>
-      <li class="case-item">
-        <span class="case-num">03</span>
-        <div>
-          <div class="case-title">语音识别(1970s → 深度学习)</div>
-          <div class="case-info">DARPA 竞赛中,一派利用人类知识(词、音素、声道结构),另一派用统计方法 + 更多计算(HMM)。<em>统计方法胜出</em>,并主导了之后几十年整个 NLP 的方向。近年深度学习是同一方向的最新一步:更少人类知识、更多计算、更大数据,效果远超前代。</div>
-        </div>
-      </li>
-      <li class="case-item">
-        <span class="case-num">04</span>
-        <div>
-          <div class="case-title">计算机视觉</div>
-          <div class="case-info">早期思路是边缘检测、广义圆柱体、SIFT 特征……今天全部被抛弃。现代深度网络只用<em>卷积 + 某些不变性</em>的概念,表现好得多。</div>
-        </div>
-      </li>
-    </ul>
-
-    <h2>两点一般性启示</h2>
-
-    <h3>1. 通用方法的威力</h3>
-    <p>能随算力增长<strong>持续 scale</strong> 的通用方法极其强大。目前看能做到"任意 scale"的只有两类:<strong>搜索(search)和学习(learning)</strong>。</p>
-
-    <h3>2. 心智内容不可约</h3>
-    <p>不要试图为"心智的内容"找简单表示——比如对空间、物体、多智能体、对称性的简单建模。这些都是外部世界任意的、内在复杂的一部分,复杂度无穷无尽,<strong>不该被内置</strong>。应该内置的只有<strong>元方法(meta-methods)</strong>:能自己去发现和捕捉这种任意复杂性的方法。</p>
+    <p><strong>两点启示:</strong></p>
+    <ol>
+      <li><strong>通用方法的威力:</strong>能随算力持续 scale 的只有两类技术——搜索和学习。</li>
+      <li><strong>心智内容不可约:</strong>不要内置对空间、物体、对称性等的简单建模,只内置能自己发现复杂性的元方法(meta-methods)。好的近似应由我们的方法去发现,而不是由我们去发现。</li>
+    </ol>
 
     <blockquote>
-      <strong>"We want AI agents that can discover like we can, not which contain what we have discovered."</strong><br>
-      我们要的是能像我们一样去发现的 AI agent,而不是装着我们已有发现的 AI。把"我们的发现"内置进去,只会让人更难看清"发现的过程"本身该怎么做。
+      "We want AI agents that can discover like we can, not which contain what we have discovered."<br>
+      我们要的是能像我们一样去发现的 AI,而不是装着我们已有发现的 AI。
     </blockquote>
 
-    <h2>关键概念速查</h2>
-
-    <table>
-      <thead>
-        <tr><th>概念</th><th>含义</th></tr>
-      </thead>
-      <tbody>
-        <tr><td class="mono">Bitter Lesson</td><td>通用计算方法长期必胜,人类知识路线长期必败;研究者屡教不改,故"苦涩"</td></tr>
-        <tr><td class="mono">Moore's Law 广义化</td><td>单位算力成本持续指数下降,长期看算力必然过剩</td></tr>
-        <tr><td class="mono">Search &amp; Learning</td><td>仅有的两类能任意 scale 计算的 AI 技术</td></tr>
-        <tr><td class="mono">Human-knowledge approach</td><td>把领域知识 / 人类思维结构内置进 agent 的研究路线</td></tr>
-        <tr><td class="mono">Meta-methods</td><td>不内置具体知识,只内置"能发现知识的方法"</td></tr>
-      </tbody>
-    </table>
-
-    <h2>一点个人感想</h2>
-
-    <p>这篇 2019 年的短文,几乎预言了之后 LLM 时代的主线:GPT 系列、Scaling Law、"scale is all you need",都是 Bitter Lesson 的又一次验证。</p>
-
-    <p>对当下的 Agent 工程也有同样的警示:精心手工设计的 prompt 流程、规则、状态机,可能都是新一轮的 "human-knowledge approach";能笑到最后的,或许是"给 agent 足够上下文 + 让它自己搜索/学习"的简单通用架构。每隔一段时间重读一次这篇文章,都能对当下正在做的事多一分警惕。</p>
-
-    <blockquote>这也是我把它放进 <a href="blog_ai_top20_papers.html">Top 20 清单</a> 的原因:它不是一篇论文,却比大多数论文更准确地预言了接下来十年。</blockquote>
   </div>
 
   <div class="article-footer">
