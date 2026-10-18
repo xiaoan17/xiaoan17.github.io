@@ -4,77 +4,47 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI 领域 Top 20 经典论文清单 | 安博成</title>
+<meta name="description" content="整理自 Zotero 收藏:从 ImageNet、AlexNet 到 Transformer、GPT 系列与 Scaling Law,20 篇勾勒出现代 AI 发展主线的经典文章。">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="AI 领域 Top 20 经典论文清单">
+<meta property="og:description" content="整理自 Zotero 收藏:从 ImageNet、AlexNet 到 Transformer、GPT 系列与 Scaling Law,20 篇勾勒出现代 AI 发展主线的经典文章。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiaoan17.github.io/blog_ai_top20_papers.html">
+<meta property="og:image" content="https://xiaoan17.github.io/banner.jpg">
+<meta property="article:published_time" content="2026-08-04">
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/article.css">
 <style>
-:root {
-  --parchment: #f5f4ed; --ivory: #faf9f5;
-  --brand: #1B365D;
-  --near-black: #141413; --dark-warm: #3d3d3a; --olive: #504e49; --stone: #6b6a64;
-  --border: #e8e6dc; --border-soft: #e5e3d8; --tag-bg: #E4ECF5;
-  --serif: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
-  --sans: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
-  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-::selection { background: var(--tag-bg); color: var(--brand); }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--sans); background: var(--parchment); color: var(--dark-warm);
-  line-height: 1.75; letter-spacing: 0.02em;
-}
-.mono { font-family: var(--mono); letter-spacing: 0; }
-a { color: var(--brand); text-decoration: none; }
-a:hover { text-decoration: underline; text-underline-offset: 3px; }
-.container { max-width: clamp(720px, 62vw, 880px); margin: 0 auto; padding: 0 32px; }
-.back-link {
-  display: inline-flex; align-items: center; gap: 6px; padding: 20px 0;
-  font-family: var(--mono); font-size: 0.8em; color: var(--stone); letter-spacing: 0;
-}
-.back-link:hover { color: var(--brand); text-decoration: none; }
-.article-header { padding: 36px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
-.article-title {
-  font-family: var(--serif); font-weight: 500; font-size: 1.9em; color: var(--near-black);
-  margin-bottom: 12px; line-height: 1.35; letter-spacing: 0.02em;
-}
-.article-meta { font-family: var(--mono); color: var(--stone); font-size: 0.78em; letter-spacing: 0; }
-.article-body h2 {
-  font-family: var(--serif); font-weight: 500; font-size: 1.3em; color: var(--brand);
-  margin: 40px 0 16px; letter-spacing: 0.02em;
-}
-.article-body p { margin-bottom: 16px; }
-.article-body strong { color: var(--near-black); font-weight: 500; }
-.article-body blockquote {
-  border-left: 2px solid var(--brand); padding: 8px 16px; margin: 20px 0;
-  background: var(--ivory); border-radius: 0 6px 6px 0; color: var(--olive);
-}
-.paper-list { list-style: none; padding: 0; }
-.paper-item {
-  padding: 16px 0; border-bottom: 1px solid var(--border-soft);
-  display: flex; gap: 14px; align-items: baseline;
-}
-.paper-item:last-child { border-bottom: none; }
-.paper-num {
-  font-family: var(--mono); font-size: 0.78em; color: var(--stone);
-  min-width: 26px; flex-shrink: 0;
-}
-.paper-title { font-weight: 500; color: var(--near-black); line-height: 1.5; }
-.paper-info { font-size: 0.82em; color: var(--stone); margin-top: 4px; line-height: 1.5; }
-.article-footer { margin-top: 56px; padding: 28px 0; border-top: 1px solid var(--border); text-align: center; }
-.site-footer { text-align: center; padding: 32px 0; border-top: 1px solid var(--border); color: var(--stone); font-size: 0.8em; }
-@media (max-width: 768px) {
-  .container { padding: 0 20px; }
-  .article-title { font-size: 1.55em; }
-}
+/* 本页无额外样式,全部走 article.css */
 </style>
 </head>
-<body>
+<body data-article>
 
-<div class="container">
-  <a class="back-link" href="index.html#blog">← 返回博客</a>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="location.href='index.html'">安博成</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">首页</a>
+      <a class="nav-tab" href="index.html#blog">博客</a>
+      <a class="nav-tab" href="index.html#projects">项目</a>
+      <a class="nav-tab" href="index.html#recommend">Anbc 推荐</a>
+      <a class="nav-tab" href="index.html#contact">联系</a>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式"></button>
+  </div>
+</nav>
+
+<div class="container article-main">
+  <a class="back-link" href="index.html#blog" style="display:inline-flex;align-items:center;gap:6px;padding:20px 0;font-family:var(--mono);font-size:0.8em;color:var(--stone);letter-spacing:0;">← 返回博客</a>
 
   <div class="article-header">
     <h1 class="article-title">AI 领域 Top 20 经典论文清单</h1>
@@ -273,14 +243,20 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
     <blockquote>这份清单也是一条学习路径：从数据（ImageNet）到算力（Brook for GPUs），到架构（ResNet、Transformer），再到规模化的胜利（GPT 系列、Scaling Laws、Chinchilla）与对齐（InstructGPT）。</blockquote>
   </div>
 
-  <div class="article-footer">
-    <a href="index.html#blog">← 返回博客列表</a>
-  </div>
+    <nav class="article-nav">
+    <a class="article-nav-link prev" href="blog_bitter_lesson.html">
+      <span class="article-nav-label">← 上一篇</span>
+      <span class="article-nav-title">The Bitter Lesson(苦涩的教训)原文 + 解读</span>
+    </a>
+    <span class="article-nav-empty"></span>
+  </nav>
 </div>
 
 <footer class="site-footer">
   <p>© 2026 安博成 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
 </footer>
+
+<script src="js/theme.js"></script>
 
 </body>
 </html>
