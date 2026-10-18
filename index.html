@@ -6,29 +6,39 @@
 <title>安博成 | Bocheng An</title>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="description" content="安博成（Bocheng An）的个人主页 — 东南大学交通运输工程博士生，研究方向为智能交通系统中的 AI 与数据科学。">
+<meta name="description" content="安博成（Bocheng An）的个人主页 — 东南大学博士生，做 AI 工具与 Agent 应用，开源项目包括 nootch、Spark Reader、Transport Journal Match。">
+<meta name="color-scheme" content="light dark">
 <meta property="og:title" content="安博成 | Bocheng An">
-<meta property="og:description" content="东南大学交通运输工程博士生，研究方向为智能交通系统中的 AI 与数据科学。">
+<meta property="og:description" content="东南大学博士生，做 AI 工具与 Agent 应用，开源项目包括 nootch、Spark Reader、Transport Journal Match。">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://xiaoan17.github.io/">
 <meta property="og:image" content="https://xiaoan17.github.io/banner.jpg">
+<script>
+// 主题引导:在首次绘制前写入 data-theme,避免深色用户看到浅色闪烁
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/article.css">
+<link rel="alternate" type="application/rss+xml" title="安博成的博客" href="rss.xml">
 </head>
 <body>
 
 <!-- Navigation -->
 <nav class="site-nav">
   <div class="nav-inner">
-    <div class="nav-brand">安博成</div>
-    <div class="nav-tabs">
-      <div class="nav-tab active" data-page="home">首页</div>
-      <div class="nav-tab" data-page="blog">博客</div>
-      <div class="nav-tab" data-page="projects">项目</div>
-      <div class="nav-tab" data-page="recommend">Anbc 推荐</div>
-      <div class="nav-tab" data-page="contact">联系</div>
+    <div class="nav-brand" data-page="home">安博成</div>
+    <div class="nav-tabs" role="tablist">
+      <button class="nav-tab active" data-page="home" role="tab" aria-current="page">首页</button>
+      <button class="nav-tab" data-page="blog" role="tab">博客</button>
+      <button class="nav-tab" data-page="projects" role="tab">项目</button>
+      <button class="nav-tab" data-page="recommend" role="tab">Anbc 推荐</button>
+      <button class="nav-tab" data-page="contact" role="tab">联系</button>
     </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式"></button>
   </div>
 </nav>
 
@@ -43,17 +53,15 @@
           <h1 class="hero-name">安博成</h1>
           <div class="hero-name-en">Bocheng An</div>
           <p class="hero-tagline">
-            东南大学交通运输工程博士生，研究方向为智能交通系统中的 AI 与数据科学。
+            东南大学博士生。在做 AI 工具与 Agent 应用 —— 写了 nootch、Spark Reader、Transport Journal Match 等开源项目，也给 Claude Code 写 Skills。
           </p>
           <p class="hero-tagline-en">
-            PhD student at Southeast University, researching AI &amp; data science for intelligent transportation systems.
+            PhD student at Southeast University. I build AI tools and agent applications — nootch, Spark Reader, Transport Journal Match, and a few Claude Code Skills.
           </p>
           <div class="hero-chips">
-            <span class="hero-chip">车辆轨迹预测</span>
-            <span class="hero-chip">交通流预测</span>
-            <span class="hero-chip">驾驶风险评估</span>
-            <span class="hero-chip">轨迹规划</span>
-            <span class="hero-chip">LLM × 智能交通</span>
+            <span class="hero-chip">LLM 应用</span>
+            <span class="hero-chip">AI Agent</span>
+            <span class="hero-chip">macOS 工具</span>
           </div>
           <div class="social-links">
             <a class="social-link" href="https://xiaoan17.github.io/anbc/" target="_blank"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>学术主页</a>
@@ -81,13 +89,7 @@
   <!-- 文章列表由 js/data/blog.js 渲染 -->
   <div id="page-blog" class="page">
     <div class="section-title">博客文章</div>
-    <div class="blog-list" id="blog-list">
-      <!-- Placeholder for future posts -->
-      <div class="blog-card" style="border-style: dashed; opacity: 0.5; cursor: default;">
-        <div class="blog-card-title">更多文章正在路上… ✍️</div>
-        <div class="blog-card-desc">后续将分享交通 AI、科研工具、编程实践等内容。</div>
-      </div>
-    </div>
+    <div class="blog-list" id="blog-list"></div>
   </div>
 
   <!-- ========== PROJECTS PAGE ========== -->
@@ -149,7 +151,7 @@
 <!-- Footer -->
 <footer class="site-footer">
   <div class="container">
-    <p>© 2026 安博成 · Built on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
+    <p>© <span id="footer-year">2026</span> 安博成 · Built on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></p>
     <p style="margin-top: 6px;">
       <a href="https://github.com/xiaoan17/xiaoan17.github.io" target="_blank" style="color: var(--stone);">Source Code</a>
     </p>
@@ -162,6 +164,7 @@
 <script src="js/data/recommend.js"></script>
 <!-- 渲染与交互 -->
 <script src="js/render.js"></script>
+<script src="js/theme.js"></script>
 <script src="js/main.js"></script>
 
 </body>
