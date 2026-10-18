@@ -4,6 +4,13 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.BLOG_POSTS = [
   {
+    title: "如何更有野心:给「有模型的人类」的教程(中文转载)",
+    url: "blog_how_to_be_more_ambitious.html",
+    date: "2026-10-18",
+    desc: "Felix Rieseberg(Anthropic, Claude 工程负责人)谈如何更有野心地使用 AI:四种野心——速度、高度、深度、广度,以及背后的心理学:自我效能。",
+    tags: ["AI", "Claude", "工作方法", "译文"]
+  },
+  {
     title: "在“我能做好”之后,我愿意把人生花在哪里",
     url: "blog_where_to_spend_life.html",
     date: "2026-10-18",

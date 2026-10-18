@@ -4,6 +4,12 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.RECOMMEND_TOOLS = [
   {
+    name: "magpie",
+    url: "https://usemagpie.ai/",
+    desc: "AI 编程 Agent 的本地模型网关。一份密钥或订阅供所有 Agent 共用 —— Codex 用 DeepSeek、Claude Code 用 Kimi，配额用尽自动切换，菜单一栏搞定。",
+    meta: ["usemagpie.ai", "★ 15.7k"]
+  },
+  {
     name: "CC Switch",
     url: "https://ccswitch.io/zh/",
     desc: "AI 编程 CLI 统一管理工具。统一管理 Claude Code、Codex、Gemini CLI、OpenCode、OpenClaw、Hermes Agent 的供应商配置、本地路由、MCP、Skills、会话与用量统计。",

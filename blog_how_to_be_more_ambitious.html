@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>如何更有野心:给「有模型的人类」的教程(中文转载) | 安博成</title>
+<meta name="description" content="Felix Rieseberg(Anthropic, Claude 工程负责人)谈如何更有野心地使用 AI:四种野心——速度、高度、深度、广度,以及背后的心理学:自我效能。">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="如何更有野心:给「有模型的人类」的教程(中文转载)">
+<meta property="og:description" content="Felix Rieseberg(Anthropic, Claude 工程负责人)谈如何更有野心地使用 AI:四种野心——速度、高度、深度、广度,以及背后的心理学:自我效能。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiaoan17.github.io/blog_how_to_be_more_ambitious.html">
+<meta property="og:image" content="https://xiaoan17.github.io/banner.jpg">
+<meta property="article:published_time" content="2026-10-18">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/article.css">
+</head>
+<body data-article>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="location.href='index.html'">安博成</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">首页</a>
+      <a class="nav-tab" href="index.html#blog">博客</a>
+      <a class="nav-tab" href="index.html#projects">项目</a>
+      <a class="nav-tab" href="index.html#recommend">Anbc 推荐</a>
+      <a class="nav-tab" href="index.html#contact">联系</a>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式"></button>
+  </div>
+</nav>
+
+<div class="container article-main">
+  <a class="back-link" href="index.html#blog" style="display:inline-flex;align-items:center;gap:6px;padding:20px 0;font-family:var(--mono);font-size:0.8em;color:var(--stone);letter-spacing:0;">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">如何更有野心:给「有模型的人类」的教程</h1>
+    <div class="article-meta">
+      ✍️ 译/安博成 · 📅 2026-10-18 · 🏷️ AI, Claude, 工作方法, 译文
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <blockquote>
+      <strong>原文信息:</strong><a href="https://felixrieseberg.com/how-to-be-more-ambitious-a-tutorial-for-humans-with-models/">How to be more ambitious: A tutorial for humans with models</a><br>
+      Felix Rieseberg · 2026-10-13 · Anthropic 工程经理,负责 Claude.ai、Cowork 与 Claude Code Desktop 的工程工作,Electron 联合维护者,此前任职于 Notion、Stripe、Slack、Microsoft。<br>
+      本文为中文翻译转载,仅供学习交流;配图是戈雅的《一种飞翔的方式》(Modo de volar)。
+    </blockquote>
+
+    <p>我在做 Claude。这是一种有趣的体验:每天我都会得知某个用 Claude(或由 Claude)完成的壮举——是我没想到的、以为不可能的,或只是自己没有好奇心和时间去尝试的。这个月,它可能帮忙发现了一颗新行星;我看到了第一支真正喜欢的 AI 音乐视频;我们正在讨论「数学的新纪元」。</p>
+
+    <p>模型的能力不是均匀增长的。用陶哲轩(Terence Tao)的话说,模型「在某些方向上惊人,在另一些方向上不足」。有些人驾驭着那些惊人的能力,看起来像在飞——看着自己参与打造的产品把人们带到不可思议的高度,是会上瘾的。而更多的人还在和自己的新翅膀较劲,不知道除了「法国的首都是哪」和「帮我把这封邮件写得别那么冲」之外,它们还能干什么。</p>
+
+    <p>我经常(和其他做 AI 的人一起)宣称:我们在使用 AI 时应该更有野心。这几乎成了一句口号——每当看到什么厉害的东西,大家就转发并写道「我们还是不够有野心」。我理解这条建议有多难执行,所以这里是一份「如何更有野心」的教程。</p>
+
+    <p>我把野心分为四种:速度(Speed)、高度(Altitude)、深度(Depth)、广度(Range)。</p>
+
+    <ul>
+      <li><strong>速度:</strong>同样的工作,花更少的时间。这是 AI 经济价值的基本盘:要写点代码?我用 Claude 写得更快。这一点已被充分理解,也不需要在方法上有什么创造力,所以跳过。</li>
+      <li><strong>高度:</strong>上升到更高的抽象层次,关注结果而不是单个任务。</li>
+      <li><strong>深度:</strong>像该领域顶尖专家那样看待任务。不停留在任务本身的层面,而是再深一层,去触碰底层的数据、工具和问题。</li>
+      <li><strong>广度:</strong>调动多个领域,而不是只用任务表面上需要的那一个;用上你平时不会用的知识、工具和技术。</li>
+    </ul>
+
+    <p>我主要用 Claude(废话),但这些建议不针对特定模型。</p>
+
+    <h2>高度(Altitude)</h2>
+
+    <p>我们常轻率地把这叫做「让模型在更高的抽象层次上工作」。当你给模型一个任务时,它执行的是你对「如何得到想要的结果」的最佳猜测。要在高度上更有野心,问问自己——接下来你真正想发生的是什么?目标背后的目标是什么?去年年初,我还在让 Claude 帮我修一个个崩溃;后来,我直接让 Claude 保持我们的应用不崩溃。</p>
+
+    <p>来看一个日常的(我敢说平庸的?)办公室任务。你在一家想象中的公司 Acme Inc,需要为季度业务复盘(QBR)做一套幻灯片。给一堆数据,Claude 会很乐意帮你做几页幻灯片;也许你还有个模板,它只需要往里填。但这和发现新行星实在没法比,所以看看有哪些具体步骤能让我们的做法更有野心。从基础的开始,每一步都更有野心一点:</p>
+
+    <ul>
+      <li>作为输入,大多数复盘想知道的是:这个季度什么变了、为什么、该怎么办。克制住只更新模板里数字的冲动——尽可能多地把数据给模型,让它理解你的业务:「告诉我这个季度什么变了,为什么,以及我们应该怎么办。」</li>
+      <li>会议(至少好的那种)理想情况下应以若干决策收尾。问 Claude:「基于你了解到的一切,找出最紧迫的三个决策,并着手研究可能的方向,给出赞成/反对的论据。」</li>
+      <li>QBR 诞生于这样一个时代:好的复盘需要人类仔细筛数据、弄清数据意味着什么、判断业务是否该调整。问 Claude:「复盘存在的意义是让领导层尽早发现问题、把钱和人调去正确的地方。设计一个比季度幻灯片更好的方式来做这件事,用我们自己的历史证明它能更早发现问题,然后和现有方式并行跑一个季度。」</li>
+    </ul>
+
+    <p>高度路线在你真正追求某个最终结果时效果最好;对创造性工作则没那么适用。一个好的判断信号是:如果你正打算开会讨论手头的工作,那高度上的野心多半是个好主意。目前也有极限(在 2026 年,对大多数生意来说,「Claude,去赚钱」本身还不管用),但我的总体观察是:模型越强大,就越能在更高的抽象层次上工作。</p>
+
+    <p>高度也是人们找到「把人移出循环」的持久工作流的地方——你不再需要不断地给模型喂一个又一个任务。做好这一点常常意味着改变你的工作流:为了让 Claude 确保我们的应用不崩溃,我得先确保它能方便地拉取崩溃报告、知道哪个应用版本对应哪个 git commit,并给它 Windows、macOS 和 Linux 机器的访问权限,好让它能真正独立地复现和验证修复。</p>
+
+    <h2>深度(Depth)</h2>
+
+    <p>有时你只是想把一个任务执行得非常好。深度上的野心,意味着推动模型使用这个领域最优秀的专业人士所用的工具、技术、媒介和知识——并且持续加压,直到连那些人也可能从你的成果中学到新东西。</p>
+
+    <p>继续用 Acme Inc 的季度复盘例子。假设 Acme Inc 正受用户流失(随时间丢失客户)困扰。我发现以下这些技术的组合很有用:</p>
+
+    <ul>
+      <li><strong>坚持使用业界顶尖者同款工具:</strong>被要求「表现得像专业人士」时,模型常常只切换词汇,而不真正切换方法。要有深度地解决这个问题,我们需要用最好的数据科学家和统计学家所用的工具。当 Claude 伸手去拿 markdown 表格时,坚持让它用数据库和统计模型。你不一定需要知道专家用什么——Claude 通常知道。</li>
+      <li><strong>定下不合理的目标,并告诉模型它们非常合理:</strong>你需要网站从 10 秒加载降到 5 秒?那要 200 毫秒。什么事在模型看来不可能?重申它完全可以解决,只需要继续往下做。</li>
+      <li><strong>挑战你已知的:</strong>尤其在商业中,我们相信为真的很多事情都只是现实的粗略近似。给模型原始信息和数据,让它对抗性地检验假设。「我们相信流失是 onboarding(新用户引导)的问题。试着用原始数据复现这个结论。」</li>
+      <li><strong>生产新知识:</strong>很容易接在上一条之后——既然 Claude 已经深入数据,就让它找盲区。「用日志搭一个我们客户的模拟,复现去年一整年。然后找出我们还不知道的最早的流失信号,并证明它能在没见过的数据上做预测。」</li>
+      <li><strong>用外部裁判:</strong>不要让模型给自己打分。我假设随着模型智能的提升,这个问题最终会被解决,但在 2026 年 10 月,我恳请你坚持外部验证。理想情况下,那是一个模型可以运行、并能立刻获得反馈的工具。</li>
+    </ul>
+
+    <p>一个经常帮到我的简单提示词:</p>
+
+    <blockquote>
+      我想要这个任务的更深版本,而不是更大的版本。改写之前,先:(1)说出这个领域的顶尖专业人士会做哪些我没要求的事;(2)指出他们会从什么最原始的材料入手,而不是已被替我消化过的东西;(3)指出他们会用的具体方法和工具;(4)说出除了你和我之外,什么能证明结果是对的。然后把我的提示词改写成恰好要求这些。
+    </blockquote>
+
+    <h2>广度(Range)</h2>
+
+    <p>简言之,广度上的野心意味着从不同领域的视角考虑我们的工作——比过去经济上划算的领域多得多。这不是什么特别独到的见解:每部劫盗电影都花前 30 分钟组建一支背景和才能各异的团队。随着 AI 产品让多智能体系统(多线程、编排器,或干脆就是子代理)越来越容易跑起来,我看到过一些非常有趣的结果,来自敦促 Claude 引入更多领域。</p>
+
+    <p>把它付诸实践并不容易,需要你有创造力。在看到我的同事 Alex Albert 用 Blender 渲染室内设计之前,我从没想过让 Claude 给我的主页做 3D 场景——尽管我以前还做过电子游戏!不过,这恰恰是我看到最多「魔法」发生的地方。</p>
+
+    <p>那么怎么做?我用这些技术:</p>
+
+    <ul>
+      <li><strong>试着把名词换成动词:</strong>一个老技巧,出自 Tom Kelley 和 Jonathan Littman 的《创新的艺术》(The Art of Innovation)。季度复盘不是「一套幻灯片」,而是「让忙碌的人相信一个关于因果的故事,并在不确定中做出决策,在 30 分钟内」。有了动词,我和 Claude 都更容易看清哪些领域能带来独特而有用的视角。</li>
+      <li><strong>组建团队:</strong>这套幻灯片必须惊艳,否则外星人就要炸掉地球。人类会召集什么样的团队?为了制作品质,我会带上一位分析师、一位记者和一位编辑。如果要上台讲,大概还要一位动效和音频设计师。雇一个对抗性的「红队」也可能有用,所以再带上一位做空者和一位法务会计师。</li>
+    </ul>
+
+    <p>很容易不小心陷入「角色扮演」——那只会让你的对话记录更怪,而不会改善实际结果。用这个方法是去找领域和技术的:别让模型「写得像」做空者,让它去做空者为了建立自己的头寸所做的事。</p>
+
+    <p>我描述的所有野心方式,都要求模型有一台能装软件的计算机,并能访问各种相关数据(通过 MCP 连接器或其他方式)。很多工具都能做到这一点,我建议你用上一个。</p>
+
+    <h2>我们以前也到过这里</h2>
+
+    <p>以上就是我关于如何更有野心的具体建议。如果你愿意再停留一分钟,我想说说为什么这件事一开始就是必要的。</p>
+
+    <p>我们人类一直被自己相信「什么是可能的」所限制——更糟的是,我们通常只在非常窄的学科里相信自己。米开朗基罗当年著名地不想画西斯廷教堂的天顶画——你知道,他是雕塑家,不是画家。</p>
+
+    <p>在研究「野心」这个问题时,我了解到心理学给它起了个名字:自我效能(self-efficacy)。简言之,自我效能高的人更相信自己的能力,进而确实成就更多。有证据表明自我效能是可以「黑」的:Locke 和 Latham 翻遍 35 年的目标设定研究,自信地宣布:被赋予具体的高难目标的人,表现好过只被告知「尽力而为」的人。Stripe 创始人 Patrick Collison 维护着一份「Fast」清单,记录人类在被同时给予大胆目标和紧迫期限时完成的种种壮举。一些有据可查的「黑法」:</p>
+
+    <ul>
+      <li><strong>通过相信难事是可能的来成就难事:</strong>1939 年,George Dantzig 在伯克利的一堂统计课上迟到,从黑板上抄下两道题,以为是作业,交了答案。那是统计学中两个悬而未决的问题。</li>
+      <li><strong>在看过别人做到之后成就难事:</strong>几十年来,人类追逐「一英里跑进四分钟」。Roger Bannister 在 1954 年 5 月打破了它,但「唯一做到过的人」这个身份他只保持了 46 天。如果你喜欢跑步,我们正在「两小时马拉松」上看到同样的事:今年四月,Sabastian Sawe 在伦敦跑出了首个官方认可的两小时内成绩——同一场比赛里,亚军也破了两小时。</li>
+      <li><strong>通过允许自己失败来成就难事:</strong>看来人人最爱的商业书都是《网球的内心游戏》(The Inner Game of Tennis),我上周才发现这本书。它的核心论点是:当你特别、特别用力地去打时,你打的反而不是最好的网球。我们工程师大概还记得 Linux 的宣言:「只是个爱好,不会像 gnu 那样庞大而专业」。</li>
+    </ul>
+
+    <p>自我效能不是新问题,但它现在成了一个更有威力的问题。在一个我们的能力每隔几周就跃升一次的世界里,我们需要一些技术,让我们去做那些自己从未真正考虑过、或相信是可能的事。如果你找到更多能让人更有野心的技术,请告诉我!</p>
+
+    <p style="color:var(--stone);font-size:0.9em;">本文配图是弗朗西斯科·戈雅的《Modo de volar》(一种飞翔的方式)。</p>
+
+  </div>
+
+    <nav class="article-nav">
+    <a class="article-nav-link prev" href="blog_where_to_spend_life.html">
+      <span class="article-nav-label">← 上一篇</span>
+      <span class="article-nav-title">在「我能做好」之后,我愿意把人生花在哪里</span>
+    </a>
+    <a class="article-nav-link next" href="blog_bitter_lesson.html">
+      <span class="article-nav-label">下一篇 →</span>
+      <span class="article-nav-title">The Bitter Lesson(苦涩的教训)原文 + 解读</span>
+    </a>
+  </nav>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博成 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+<script src="js/theme.js"></script>
+
+</body>
+</html>
