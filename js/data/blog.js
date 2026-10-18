@@ -4,6 +4,13 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.BLOG_POSTS = [
   {
+    title: "在“我能做好”之后,我愿意把人生花在哪里",
+    url: "blog_where_to_spend_life.html",
+    date: "2026-10-18",
+    desc: "当“我能不能做好”逐渐有了答案,值得追问的是:哪些事情值得由我长期投入,而我的选择标准有多少是自己决定的?",
+    tags: ["思考", "个人成长"]
+  },
+  {
     title: "The Bitter Lesson(苦涩的教训)原文 + 解读",
     url: "blog_bitter_lesson.html",
     date: "2026-10-12",
