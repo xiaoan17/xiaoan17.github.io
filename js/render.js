@@ -35,7 +35,10 @@
         post.tags.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join('') +
         '</div>'
       : '';
-    return '<a class="blog-card" href="' + esc(post.url) + '" target="_blank" style="display:block">' +
+    // 站内文章同标签页打开,外链才新开标签页
+    var isExternal = /^https?:\/\//.test(post.url);
+    var target = isExternal ? ' target="_blank"' : '';
+    return '<a class="blog-card" href="' + esc(post.url) + '"' + target + ' style="display:block">' +
       '<div class="blog-card-title">' + esc(post.title) + '</div>' +
       '<div class="blog-card-meta"><span>' + esc(post.date) + '</span><span>' + esc(metaLabel) + '</span></div>' +
       '<div class="blog-card-desc">' + esc(post.desc) + '</div>' +
@@ -45,11 +48,10 @@
 
   function renderBlog() {
     var posts = window.BLOG_POSTS || [];
-    // 博客页:完整列表(插在占位卡片之前)
+    // 博客页:完整列表
     var blogList = document.getElementById('blog-list');
     if (blogList) {
-      blogList.insertAdjacentHTML('afterbegin',
-        posts.map(function (p) { return blogCardHTML(p, '安博成', true); }).join(''));
+      blogList.innerHTML = posts.map(function (p) { return blogCardHTML(p, '安博成', true); }).join('');
     }
     // 首页:最新 3 篇
     var homeList = document.getElementById('home-blog-list');
