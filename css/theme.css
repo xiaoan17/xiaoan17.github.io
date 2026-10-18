@@ -1,0 +1,43 @@
+/* ============================================================
+   主题变量 —— 全站共用(index.html 与各文章页)
+   浅色:暖纸质感;深色:同气质的暖暗色
+   ============================================================ */
+:root {
+  --parchment: #f5f4ed; --ivory: #faf9f5; --warm-sand: #e8e6dc;
+  --brand: #1B365D;
+  --near-black: #141413; --dark-warm: #3d3d3a; --olive: #504e49; --stone: #6b6a64;
+  --border: #e8e6dc; --border-soft: #e5e3d8; --tag-bg: #E4ECF5;
+  --nav-bg: rgba(245, 244, 237, 0.9);
+  --scroll-hint: linear-gradient(to right, rgba(245, 244, 237, 0), rgba(245, 244, 237, 1));
+  --shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 8px 30px rgba(27, 54, 93, 0.10);
+  --serif: 'Noto Serif SC', 'Songti SC', 'STSong', Georgia, serif;
+  --sans: 'Noto Sans SC', -apple-system, 'PingFang SC', sans-serif;
+  --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+
+/* 系统深色:仅在用户未手动选择时跟随 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --parchment: #1a1916; --ivory: #232119; --warm-sand: #2c2a24;
+    --brand: #8FB4E3;
+    --near-black: #e8e5dc; --dark-warm: #cfccc2; --olive: #b3b0a6; --stone: #8b897f;
+    --border: #33312b; --border-soft: #2b2924; --tag-bg: #26313F;
+    --nav-bg: rgba(26, 25, 22, 0.9);
+    --scroll-hint: linear-gradient(to right, rgba(26, 25, 22, 0), rgba(26, 25, 22, 1));
+    --shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+  }
+}
+
+/* 手动选择深色(优先级高于系统) */
+:root[data-theme="dark"] {
+  --parchment: #1a1916; --ivory: #232119; --warm-sand: #2c2a24;
+  --brand: #8FB4E3;
+  --near-black: #e8e5dc; --dark-warm: #cfccc2; --olive: #b3b0a6; --stone: #8b897f;
+  --border: #33312b; --border-soft: #2b2924; --tag-bg: #26313F;
+  --nav-bg: rgba(26, 25, 22, 0.9);
+  --scroll-hint: linear-gradient(to right, rgba(26, 25, 22, 0), rgba(26, 25, 22, 1));
+  --shadow-sm: 0 4px 24px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.4);
+}

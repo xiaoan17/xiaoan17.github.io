@@ -1,0 +1,96 @@
+/* ============================================================
+   文章页公共样式(blog_*.html 共用)
+   颜色/字体变量见 css/theme.css —— 深色模式自动生效
+   使用方式:文章页 <body data-article> + .article-header / .article-body /
+            .article-meta / .article-footer / .article-nav
+   ============================================================ */
+
+/* 文章页基础 */
+body[data-article] {
+  font-family: var(--sans); background: var(--parchment); color: var(--dark-warm);
+  line-height: 1.75; letter-spacing: 0.02em; min-height: 100vh;
+  display: flex; flex-direction: column;
+  transition: background-color 0.2s, color 0.2s;
+}
+body[data-article] a { color: var(--brand); text-decoration: none; }
+body[data-article] a:hover { text-decoration: underline; text-underline-offset: 3px; }
+body[data-article] .container { max-width: clamp(720px, 62vw, 880px); }
+
+/* 站点导航(与 index.html 相同的结构,复用 style.css 中的 .site-nav 等样式) */
+
+/* 正文区 */
+.article-main { flex: 1; width: 100%; }
+.article-header { padding: 40px 0 28px; border-bottom: 1px solid var(--border); margin-bottom: 36px; }
+.article-title {
+  font-family: var(--serif); font-weight: 500; font-size: 1.9em; color: var(--near-black);
+  margin-bottom: 12px; line-height: 1.35; letter-spacing: 0.02em;
+}
+.article-meta {
+  font-family: var(--mono); color: var(--stone); font-size: 0.78em; letter-spacing: 0;
+  display: flex; flex-wrap: wrap; gap: 6px 14px;
+}
+.article-body { padding-bottom: 16px; }
+.article-body p { margin-bottom: 16px; }
+.article-body strong { color: var(--near-black); font-weight: 500; }
+.article-body h2, .article-body h3 {
+  font-family: var(--serif); font-weight: 500; color: var(--near-black);
+  margin: 32px 0 12px; line-height: 1.4;
+}
+.article-body h2 { font-size: 1.25em; }
+.article-body h3 { font-size: 1.1em; }
+.article-body ul, .article-body ol { margin: 0 0 16px 24px; }
+.article-body li { margin-bottom: 6px; }
+.article-body blockquote {
+  border-left: 2px solid var(--brand); padding: 8px 16px; margin: 20px 0;
+  background: var(--ivory); border-radius: 0 6px 6px 0; color: var(--olive);
+}
+.article-body code {
+  font-family: var(--mono); font-size: 0.88em; background: var(--ivory);
+  border: 1px solid var(--border-soft); border-radius: 4px; padding: 1px 6px;
+}
+.article-body pre {
+  background: var(--ivory); border: 1px solid var(--border); border-radius: 8px;
+  padding: 14px 16px; overflow-x: auto; margin: 20px 0; font-size: 0.85em; line-height: 1.6;
+}
+.article-body pre code { background: none; border: none; padding: 0; }
+.article-body img { max-width: 100%; border-radius: 8px; margin: 12px 0; }
+.article-body a { text-decoration: underline; text-underline-offset: 3px; }
+.article-body a:hover { color: var(--brand); }
+
+/* 上一篇 / 下一篇 */
+.article-nav {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--border);
+}
+.article-nav-link {
+  display: block; padding: 14px 16px; border: 1px solid var(--border); border-radius: 8px;
+  background: var(--ivory); color: var(--near-black); transition: border-color 0.15s;
+}
+.article-nav-link:hover { text-decoration: none; border-color: var(--brand); }
+.article-nav-link.next { text-align: right; }
+.article-nav-label {
+  display: block; font-family: var(--mono); font-size: 0.7em; color: var(--stone);
+  letter-spacing: 1px; margin-bottom: 6px;
+}
+.article-nav-title { font-size: 0.9em; line-height: 1.5; }
+.article-nav-empty { visibility: hidden; }
+
+/* 文章页 footer */
+.article-footer { padding: 28px 0 8px; text-align: center; }
+body[data-article] .site-footer {
+  text-align: center; padding: 28px 0; border-top: 1px solid var(--border);
+  color: var(--stone); font-size: 0.8em;
+}
+
+@media (max-width: 768px) {
+  body[data-article] .container { padding: 0 20px; }
+  .article-title { font-size: 1.55em; }
+  .article-header { padding: 28px 0 22px; margin-bottom: 28px; }
+  .article-nav { grid-template-columns: 1fr; }
+}
+
+@media print {
+  body[data-article] { background: #fff; color: #000; }
+  body[data-article] .site-nav, .article-nav { display: none; }
+  .article-body a { color: #000; }
+}
