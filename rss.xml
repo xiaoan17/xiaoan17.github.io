@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>安博成的博客</title>
+    <link>https://xiaoan17.github.io/</link>
+    <description>智能交通、AI Agent、科研工具与个人思考</description>
+    <language>zh-CN</language>
+    <atom:link href="https://xiaoan17.github.io/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>在“我能做好”之后,我愿意把人生花在哪里</title>
+      <link>https://xiaoan17.github.io/blog_where_to_spend_life.html</link>
+      <guid>https://xiaoan17.github.io/blog_where_to_spend_life.html</guid>
+      <pubDate>Sat, 18 Oct 2026 00:00:00 +0800</pubDate>
+      <description>当“我能不能做好”逐渐有了答案,值得追问的是:哪些事情值得由我长期投入,而我的选择标准有多少是自己决定的?</description>
+    </item>
+    <item>
+      <title>The Bitter Lesson(苦涩的教训)原文 + 解读</title>
+      <link>https://xiaoan17.github.io/blog_bitter_lesson.html</link>
+      <guid>https://xiaoan17.github.io/blog_bitter_lesson.html</guid>
+      <pubDate>Mon, 12 Oct 2026 00:00:00 +0800</pubDate>
+      <description>Sutton 2019 年经典短文:70 年 AI 研究最大的教训是,能 scale 计算的通用方法(搜索 + 学习)最终必然胜过一切依赖人类知识的方法。附英文原文。</description>
+    </item>
+    <item>
+      <title>AI 领域 Top 20 经典论文清单</title>
+      <link>https://xiaoan17.github.io/blog_ai_top20_papers.html</link>
+      <guid>https://xiaoan17.github.io/blog_ai_top20_papers.html</guid>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 +0800</pubDate>
+      <description>整理自 Zotero 收藏:从 ImageNet、AlexNet 到 Transformer、GPT 系列与 Scaling Law,20 篇勾勒出现代 AI 发展主线的经典文章。</description>
+    </item>
+  </channel>
+</rss>

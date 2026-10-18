@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>页面不存在 | 安博成</title>
+<meta name="color-scheme" content="light dark">
+<link rel="icon" type="image/png" href="favicon.png">
+<script>
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<style>
+  body {
+    font-family: var(--sans); background: var(--parchment); color: var(--dark-warm);
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 24px; line-height: 1.7;
+  }
+  .code { font-family: var(--serif); font-size: 4.5em; color: var(--near-black); font-weight: 500; }
+  .msg { color: var(--stone); margin: 8px 0 24px; }
+  a {
+    color: var(--brand); text-decoration: none;
+    border: 1px solid var(--border); border-radius: 6px; padding: 8px 20px;
+    background: var(--ivory); font-size: 0.9em;
+  }
+  a:hover { border-color: var(--brand); }
+</style>
+</head>
+<body>
+  <div>
+    <div class="code">404</div>
+    <p class="msg">这个页面不存在,可能已被移动或删除。</p>
+    <a href="index.html">← 回到首页</a>
+  </div>
+</body>
+</html>
