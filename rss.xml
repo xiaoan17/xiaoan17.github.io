@@ -7,6 +7,13 @@
     <language>zh-CN</language>
     <atom:link href="https://xiaoan17.github.io/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>拆开 Qoder CN 0.4.11：Electron 工作台、Claude Code 血统的运行时与十五个逻辑模型</title>
+      <link>https://xiaoan17.github.io/blog_qoder_architecture.html</link>
+      <guid>https://xiaoan17.github.io/blog_qoder_architecture.html</guid>
+      <pubDate>Sun, 25 Oct 2026 22:00:00 +0800</pubDate>
+      <description>Electron 43 + React 19 工作台 + 33 MB Agent 运行时 + 110 表 SQLite + 15 个逻辑模型键：qfmodel→Qwen3.8-Flash、kmodel_latest→Kimi-K3.1-Pro。</description>
+    </item>
+    <item>
       <title>拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关</title>
       <link>https://xiaoan17.github.io/blog_dumate_architecture.html</link>
       <guid>https://xiaoan17.github.io/blog_dumate_architecture.html</guid>

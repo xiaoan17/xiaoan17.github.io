@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拆开 Qoder CN 0.4.11：Electron 工作台、Claude Code 血统的运行时与十五个逻辑模型 | 安博成</title>
+<meta name="description" content="2026-10-25 版本拆解：Electron 43 + React 19 工作台 + 33 MB Agent 运行时 + 110 表 SQLite + 15 个逻辑模型键；qfmodel→Qwen3.8-Flash、kmodel_latest→Kimi-K3.1-Pro。">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="拆开 Qoder CN 0.4.11：Electron 工作台、Claude Code 血统的运行时与十五个逻辑模型">
+<meta property="og:description" content="2026-10-25 版本拆解：Electron 43 + React 19 工作台 + 33 MB Agent 运行时 + 110 表 SQLite + 15 个逻辑模型键；qfmodel→Qwen3.8-Flash、kmodel_latest→Kimi-K3.1-Pro。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiaoan17.github.io/blog_qoder_architecture.html">
+<meta property="og:image" content="https://xiaoan17.github.io/banner.jpg">
+<meta property="article:published_time" content="2026-10-25">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/article.css">
+<style>
+/* 本页额外的表格、提示框与架构图样式，全部走主题变量 */
+.article-body .table-wrap { overflow-x: auto; margin: 20px 0; }
+.article-body table {
+  width: 100%; border-collapse: collapse; margin: 0; font-size: 0.9em; line-height: 1.6;
+}
+.article-body th, .article-body td {
+  border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top;
+}
+.article-body th {
+  background: var(--ivory); color: var(--near-black); font-weight: 500; white-space: nowrap;
+}
+.article-body td code { white-space: nowrap; }
+.article-body table.wide td:first-child { white-space: nowrap; }
+.article-body .callout {
+  border: 1px solid var(--border); background: var(--ivory); border-radius: 8px;
+  padding: 14px 16px; margin: 22px 0;
+}
+.article-body .callout-title {
+  font-family: var(--mono); font-size: 0.72em; letter-spacing: 1px;
+  color: var(--brand); margin-bottom: 8px;
+}
+.article-body .callout p:last-child { margin-bottom: 0; }
+.article-body pre.arch { font-size: 0.72em; line-height: 1.55; }
+.article-body .small { color: var(--stone); font-size: 0.88em; }
+.article-body .table-hint { display: none; }
+body[data-article] { overflow-x: hidden; }
+@media (max-width: 768px) {
+  .article-body table { font-size: 0.82em; }
+  .article-body table.wide { min-width: 560px; }
+  .article-body .table-hint { display: block; font-family: var(--mono); font-size: 0.72em; color: var(--stone); margin: -6px 0 6px; }
+  .article-body pre.arch { font-size: 0.62em; }
+}
+</style>
+</head>
+<body data-article>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="location.href='index.html'">安博成</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">首页</a>
+      <a class="nav-tab" href="index.html#blog">博客</a>
+      <a class="nav-tab" href="index.html#projects">项目</a>
+      <a class="nav-tab" href="index.html#recommend">Anbc 推荐</a>
+      <a class="nav-tab" href="index.html#contact">联系</a>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式"></button>
+  </div>
+</nav>
+
+<div class="container article-main">
+  <a class="back-link" href="index.html#blog" style="display:inline-flex;align-items:center;gap:6px;padding:20px 0;font-family:var(--mono);font-size:0.8em;color:var(--stone);letter-spacing:0;">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">拆开 Qoder CN 0.4.11：Electron 工作台、Claude Code 血统的运行时与十五个逻辑模型</h1>
+    <div class="article-meta">
+      ✍️ 安博成 · 📅 2026-10-25 · 🏷️ AI Agent, Qoder, 技术拆解, 架构
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <p>Qoder 是我最近用得最多的一个桌面 Agent。它的产品页讲的是「Agent workbench for human and AI software teams」，但真正有意思的东西都藏在安装包里：一个 176 MB 的 <code>app.asar</code>、一个 33 MB 的混淆 Agent 运行时、一张 110 张表的 SQLite、十个自带扩展，以及一个能锁屏后继续替你点鼠标的独立 helper app。</p>
+
+    <p>于是我把本机这版 macOS 客户端拆了一遍。和上一篇拆 DuMate 的方法一样：只看安装包结构、配置、二进制符号、数据库 schema 和运行日志里的请求元数据。</p>
+
+    <div class="callout">
+      <div class="callout-title">边界</div>
+      <p>只读分析，没有绕过鉴权，没有展开任何对话内容。会话正文、消息、附件一律没读；日志只看请求行、模型代号、耗时和状态码。结论只代表这个版本、这个平台、这个账号。</p>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">TL;DR</div>
+      <p>Qoder CN 是「<strong>Electron 壳 + React 工作台 + Claude Code 血统的 Agent 运行时 + SQLite 化的本地控制面 + 十五个逻辑模型键</strong>」。</p>
+      <p>模型侧最重要的设计不是用了哪家模型，而是<strong>客户端根本不写死模型</strong>：目录里只有 <code>qfmodel</code>、<code>kmodel_latest</code>、<code>qmodel_38max</code> 这类代号，真名由网关目录下发。本次观测到 <code>qfmodel</code> → <strong>Qwen3.8-Flash</strong>、<code>kmodel_latest</code> → <strong>Kimi-K3.1-Pro</strong>，两者都是 180K 上下文、多模态、<code>model</code> 字段留空等网关改派。</p>
+      <p>运行时侧最重要的发现是<strong>血统</strong>：工具名、<code>SKILL.md</code>、hooks、agents、<code>chat.proto</code> 的字段设计，和 Claude Code 那一套高度同构。Qoder 没有从零造一个 Agent OS，而是把一套成熟 harness 重写成自己的 worker，再把差异化放在「手」和「端」上——电脑操控、手机操控、站点托管、遥控、Agent Team。</p>
+    </div>
+
+    <h2>一、探测对象与方法</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>客户端</th><td>Qoder CN 0.4.11（构建 2026-10-23，buildNumber 82468195）</td></tr>
+          <tr><th>平台</th><td>macOS arm64（<code>darwin-arm64</code>）</td></tr>
+          <tr><th>桌面壳</th><td>Electron 43.1.1，Node 24.18.0</td></tr>
+          <tr><th>安装包</th><td><code>.app</code> 724 MB；<code>app.asar</code> 184,675,082 B；包内 6,388 个文件、162 个 npm 包</td></tr>
+          <tr><th>Agent 运行时</th><td><code>qoder-worker-runtime</code> 1.1.75-hotfix.1，34,389,777 B 混淆 ESM</td></tr>
+          <tr><th>内置扩展</th><td>10 个，合计 144.5 MiB</td></tr>
+          <tr><th>本地数据库</th><td><code>main.sqlite</code> 9.5 MB，110 张表 / 202 个索引</td></tr>
+          <tr><th>构建痕迹</th><td>commit <code>d999676</code>，构建时间 2026-10-23T06:13Z</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>方法：</p>
+
+    <ul>
+      <li>用 asar 头部解析 <code>app.asar</code> 的文件表，按需抽取主进程、渲染层与 SDK 文件；</li>
+      <li>用 <code>strings</code> / 正则扫随包二进制与混淆 bundle，找工具名、端点、模型键；</li>
+      <li>读 <code>~/Library/Application Support/com.qodercn.app.stable/*.sqlite</code> 的 schema 与行数（不读 payload）；</li>
+      <li>读 <code>~/.qoder-cn/logs/runs/*/qodercli.log</code> 的请求行、模型代号与耗时；</li>
+      <li>看进程树、监听端口、TCC 声明、签名主体；</li>
+      <li>对照官方文档与扩展包内的 manifest。</li>
+    </ul>
+
+    <h2>二、架构总览</h2>
+
+    <pre class="arch"><code>┌──────────────────────────────────────────────────────────┐
+│ 渲染层  React 19 workbench（会话/工作区/站点/自动化/扩展）│
+└──────────────────────────────────────────────────────────┘
+                             │ preload + contextBridge（IPC）
+                             ▼
+┌──────────────────────────────────────────────────────────┐
+│ 本地控制面  Electron 主进程（业务代码混淆）              │
+│ SQLite 110 表 · MCP router :62445 · 插件宿主 · 遥控      │
+└──────────────────────────────────────────────────────────┘
+          │ spawn(node)        │ stdio MCP          │ unix socket
+          ▼                    ▼                    ▼
+┌────────────────────┐ ┌────────────────────┐ ┌────────────────────┐
+│ worker runtime     │ │ qoder-search       │ │ Computer Use       │
+│ 33 MB 混淆 ESM     │ │ rg + mtree + 向量  │ │ 2.2.13 独立 app    │
+│ ~36 工具 / hooks   │ │ 远端 embedding     │ │ phone-use / sites  │
+└────────────────────┘ └────────────────────┘ └────────────────────┘
+          │ HTTPS / SSE        │ HTTPS
+          └─────────┬──────────┘
+                    ▼
+┌──────────────────────────────────────────────────────────┐
+│ gateway.qoder.com.cn  ·  openapi.qoder.com.cn            │
+│ 模型网关 · 模型目录 · 代码库同步 · 站点托管 · 额度 · 遥控│
+└──────────────────────────────────────────────────────────┘</code></pre>
+
+    <p>从外到内五层：</p>
+
+    <ol>
+      <li><strong>渲染层</strong>：React 19 工作台，负责会话、工作区、站点、自动化、扩展市场、浏览器标签页。</li>
+      <li><strong>本地控制面</strong>：Electron 主进程，把会话、协作、遥控、市场、自动化、额度都收进本地 SQLite，并暴露一个 MCP router。</li>
+      <li><strong>Agent 运行时</strong>：被主进程拉起的 <code>qoder-worker-runtime</code>，管 agent loop、工具、hook、技能、子代理、记忆。</li>
+      <li><strong>执行器</strong>：本地 shell、代码检索索引、电脑操控 helper、手机操控（Appium）、站点服务。</li>
+      <li><strong>云服务</strong>：模型网关、模型目录、代码库同步、站点托管、额度与遥控信令。</li>
+    </ol>
+
+    <p>跟 DuMate 的「Go 控制面 + OpenCode 运行时」相比，Qoder 少了独立控制面二进制，多了「控制面直接长在 Electron 主进程里」；多出来的是插件市场、站点托管、遥控和 Agent Team。</p>
+
+    <h2>三、桌面壳：不是聊天框，是工作台</h2>
+
+    <p>打开就是那张「不止于编程」的首页。它的信息架构已经说明定位：左边是「新的任务 / 工作区 / 最近任务」，下面四个入口是「站点 / 自动化 / 扩展 / 更多」，输入框上还有「手机遥控电脑」。会话只是六分之一。</p>
+
+    <p>几个可验证的细节：</p>
+
+    <ul>
+      <li>前端用 React 19 + <code>@qoder-space/workbench</code>、<code>editor-core</code>、<code>design-system</code>、<code>artifact-preview</code>、<code>collaboration-core</code>，外加 xterm 6、Shiki、framer-motion、gsap。这是一个 IDE 级工作台，不是聊天页。</li>
+      <li><code>chat_sessions</code> 表里两个维度很能说明问题：<code>product_mode</code> 取 <code>coding</code> / <code>general</code>（对应界面左上角的终端图标与「通用」），<code>conversation_mode</code> 取 <code>normal</code> / <code>voice</code>。本机 73 个会话里 70 个是 <code>general</code>。</li>
+      <li>主进程会<strong>用自己的可执行文件</strong>再拉起运行时（argv 里带 <code>--sdk</code>），进程环境里有 <code>QODER_CONFIG_DIR=~/.qoder-cn</code>：
+
+        <pre><code>Qoder CN .../qoder-worker-runtime.obf.mjs --sdk</code></pre>
+
+        也就是说，744 MB 的壳同时兼任 JS 宿主，不必额外塞一个 node 运行时。</li>
+      <li>原生能力散在 <code>Contents/Frameworks</code> 和 <code>Contents/Resources/bin</code>：<code>node-pty</code>（终端）、<code>sharp</code>（图像）、<code>keytar</code>（钥匙串）、<code>native_clipboard</code>、<code>notification_permission</code>、<code>hosted_presentation_host</code>（共享演示）、<code>dji_mic_button</code>（大疆麦克风的硬件按键）、<code>appshot_bare_modifier_monitor</code>（组合键截屏监听）。</li>
+    </ul>
+
+    <p><strong>混淆边界</strong>值得单独说：主进程、preload、worker 全部混淆（字符串表 + 解码器），但 <code>extensions/</code>、<code>plugins/</code>、<code>computer-control</code> 这些扩展的 JS <strong>完全没有混淆</strong>，还保留着 <code>// src/node/main.ts</code> 的源码路径和中文注释。这是一个很清楚的取舍：核心链路防逆向，能力层要可读、可调试、可审计。</p>
+
+    <h2>四、本地控制面：一张 110 张表的 SQLite</h2>
+
+    <p><code>main.sqlite</code> 9.5 MB、110 张表、202 个索引。按用途分，能看出产品边界：</p>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr><th>域</th><th>代表表</th><th>说明</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>会话</td><td><code>chat_sessions</code>、<code>chat_session_messages</code>、<code>turn_file_change_sets/patches/operations</code></td><td>会话/消息/逐轮文件改动，写时用 trigger 维护 <code>history_revisions</code></td></tr>
+          <tr><td>检索</td><td><code>chat_session_search_fts</code></td><td>FTS5 trigram、contentless，指向 <code>chat_session_search_segments</code></td></tr>
+          <tr><td>遥控</td><td><code>rc_*</code> 15 张表</td><td>ingress、admission、history_sync、identity、continuity、interaction</td></tr>
+          <tr><td>Agent/Team</td><td><code>agent_profiles</code>、<code>agent_runtimes</code>、<code>agent_teams</code>、<code>agent_team_members</code>、<code>agent_registration_outbox</code></td><td>本地 Agent 与「Team」的注册/委派</td></tr>
+          <tr><td>协作</td><td><code>discussion_*</code>、<code>collaboration_*</code>、<code>issue_agent_*</code></td><td>讨论、议题、Agent 投递</td></tr>
+          <tr><td>市场</td><td><code>marketplace_*</code> 8 张、<code>plugin_inventory_*</code> 5 张、<code>mcp_*</code></td><td>扩展/MCP 的安装收据与资源绑定</td></tr>
+          <tr><td>自动化</td><td><code>scheduled_tasks</code>、<code>scheduled_task_run_logs</code>、<code>cloud_automation_list_cache</code></td><td>定时任务 + 云端自动化缓存</td></tr>
+          <tr><td>模型</td><td><code>chat_model_preferences</code>、<code>byok_model_profiles/credentials/capability_metadata</code></td><td>模型可见性、上下文、推理档位、BYOK</td></tr>
+          <tr><td>自进化</td><td><code>skill_evolution_suggestions</code> / <code>_attempts</code></td><td>技能演化建议与执行记录</td></tr>
+          <tr><td>迁移</td><td><code>remote_qoder_ide_migration_ledger</code> + 两个独立迁移库</td><td>从 Qoder IDE 搬会话与记忆</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>本地只开了一个监听端口：<strong>127.0.0.1:62445</strong>，主进程持有，<code>~/.qoder-cn/mcp-router.json</code> 里写着 <code>schemaVersion=2</code>、<code>pid</code>、<code>baseUrl</code> 和一把 43 字符的 apiKey。所有 MCP server（含 <code>qoder-search</code>、<code>qoder-qmind</code>）都挂在这个 router 后面，所以插件不需要各自占端口。</p>
+
+    <p>数据目录也很直白：</p>
+
+    <pre><code>~/.qoder-cn/
+├── settings.json        模型/provider/插件开关（34 KB）
+├── agents/              自定义 Agent（front-matter: permissionMode/skills/mcpServers）
+├── skills/              28 个技能（本机全是指向 ~/.agents/skills 的软链）
+├── plugins/             市场 + 缓存（74 MB）
+├── memory/              MEMORY.md / workbuddy-soul.md / workbuddy-identity.md
+├── projects/            按 cwd 扁平化命名，每会话一个 jsonl
+├── sites/ tasks/ host-actions/ file-history/
+├── logs/runs/           每次启动一个 run 目录（manifest + qodercli.log）
+└── .models/             模型目录缓存（catalog-v6/v7，加密）</code></pre>
+
+    <h2>五、Agent 运行时：一套被重写的 harness</h2>
+
+    <p><code>qoder-worker-runtime.obf.mjs</code> 33 MB，混淆但没加壳。<code>runtime-info.json</code> 里泄露了不少构建信息：版本 1.1.75-hotfix.1、commit <code>cb3c036</code>、<code>profile: "platform"</code>、<code>buildEnv: "dev"</code>，以及一条 Aone CI 的绝对路径（<code>aoneci-runner/.../dist-worker-runtime-cn</code>）。随包带 <code>sharp</code>、<code>photon</code>、<code>keytar</code>、<code>node-pty</code> 和 vendored 的 <code>ripgrep</code>。</p>
+
+    <p><strong>工具表</strong>是从常量区直接读出来的，42 个名字，去掉 3 个 PTY 事件（<code>BashInput/BashOutput/BashResize</code>）和 3 个重复别名，实际注册面约 36 个：</p>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr><th>类别</th><th>工具</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>文件/执行</td><td><code>Read</code> <code>Write</code> <code>Edit</code> <code>NotebookEdit</code> <code>Bash</code> <code>PowerShell</code> <code>Glob</code> <code>Grep</code> <code>Monitor</code> <code>TaskStop</code></td></tr>
+          <tr><td>检索</td><td><code>WebSearch</code> <code>WebFetch</code> <code>ImageSearch</code> <code>CodebaseInvestigator</code></td></tr>
+          <tr><td>规划/交互</td><td><code>TodoWrite</code> <code>AskUserQuestion</code> <code>EnterPlanMode</code> <code>ExitPlanMode</code> <code>UpdateTopic</code> <code>CompleteTask</code></td></tr>
+          <tr><td>多代理</td><td><code>Agent</code> <code>SendMessage</code> <code>EnterWorktree</code> <code>ExitWorktree</code></td></tr>
+          <tr><td>目标/调度</td><td><code>CreateGoal</code> <code>GetGoal</code> <code>UpdateGoal</code> <code>CronCreate</code> <code>CronList</code> <code>CronDelete</code> <code>ScheduleWakeup</code></td></tr>
+          <tr><td>任务</td><td><code>TaskCreate</code> <code>TaskGet</code> <code>TaskUpdate</code> <code>TaskList</code></td></tr>
+          <tr><td>能力</td><td><code>Skill</code></td></tr>
+          <tr><td>生成</td><td><code>ImageGen</code> <code>VideoGen</code> <code>VideoGenRetrieve</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>这份表比任何产品文档都诚实：<code>Agent</code> + <code>SendMessage</code> 意味着子代理与 Agent 间通信，<code>Cron*</code> + <code>ScheduleWakeup</code> 意味着「自动化」不是外挂而是运行时原语，<code>ImageGen/VideoGen</code> 说明它不止写代码，<code>CodebaseInvestigator</code> 说明代码库理解是一个独立工具而不是塞进 grep。</p>
+
+    <p><strong>权限模型</strong>有三种，日志里都能看到：<code>default</code>、<code>auto</code>、<code>bypassPermissions</code>（界面上叫「自动审批」）。<code>auto</code> 不是简单地全放行，而是走一层分类器：</p>
+
+    <pre><code>[permission-check] main Bash mode=auto → allow point=shell.readonly.allow
+[permission-check] main Bash mode=auto → allow point=mode.auto_classifier.allow
+[permission-check] main Bash mode=auto → deny  point=mode.auto_classifier_blocked.deny</code></pre>
+
+    <p>只读命令走白名单，其他命令问分类器，分类器说不就拒。</p>
+
+    <p><strong>协议层</strong>也留在包里：<code>proto/chat.proto</code>（322 行，protobuf）。请求体是 OpenAI 兼容的 chat completion，但加了几样东西——<code>patches</code>（逐轮补丁）、<code>cache_id</code> + <code>cache_control</code>（提示缓存）、<code>ReasoningEffort</code>（<code>NONE/LOW/MEDIUM/HIGH/XHIGH/MAX</code>）、<code>ReasoningItem.encrypted_content</code>、<code>custom_model</code>。这说明上下文不是每次全量重发，而是「缓存 + 补丁」的增量模型。</p>
+
+    <p><strong>记忆与自进化</strong>：</p>
+
+    <ul>
+      <li><code>memory/</code> 三件套 <code>MEMORY.md</code>、<code>SOUL.md</code>、<code>IDENTITY.md</code>，和 Claude Code 的约定同构；远端配置里有个开关 <code>auto_memory_policy { extractionEveryNTurns: 5 }</code>，即每五轮抽一次记忆。</li>
+      <li><code>skill_evolution_suggestions</code> 有完整生命周期：<code>pending → starting → evolving → evolved / dismissed / expired / hash_invalidated</code>，带置信度和 <code>evolution_session_id</code>。也就是说它会另起一个会话把「这次的经验」写成技能文件，再用文件哈希防冲突。</li>
+    </ul>
+
+    <h2>六、模型层：十五个逻辑键，目录加密</h2>
+
+    <p>这是我最关心的部分，也是最像「工程决策」的部分。</p>
+
+    <p><code>chat_model_preferences</code> 里有 15 个产品目录键（都 <code>visible=1</code>）：</p>
+
+    <pre><code>auto  fast  gmodel  gfmodel  gm51model  dmodel  dfmodel  mmodel
+kmodel  kmodel_latest  qmodel  qmodel_latest  qmodel_38max  q37fmodel  qfmodel</code></pre>
+
+    <p>命名规律几乎写在脸上：<code>q*</code> = Qwen、<code>k*</code> = Kimi、<code>g*</code> = Gemini、<code>d*</code> = DeepSeek、<code>m*</code> = MiniMax，<code>fast</code> 是轻量档，<code>auto</code> 是路由。<code>*_latest</code> 追最新，固定名（如 <code>qmodel_38max</code>）钉版本。</p>
+
+    <p>从日志里抓到的真实映射只有两条，但足够说明机制：</p>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr><th>逻辑键</th><th>展示名</th><th>is_vl</th><th>上下文</th><th><code>model</code> 字段</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><code>qfmodel</code></td><td>Qwen3.8-Flash</td><td>true</td><td>180,000</td><td>空</td></tr>
+          <tr><td><code>kmodel_latest</code></td><td>Kimi-K3.1-Pro</td><td>true</td><td>180,000</td><td>空</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>model: ""</code> 是关键：客户端只知道「我要 qfmodel」，真实后端型号由网关决定。这和 DuMate 的 <code>model-text</code> / <code>X-Dumate-Gw-Realmodel</code> 是同一套思路，区别在于 <strong>Qoder 没有把真实型号回显给用户</strong>——日志里没有 header，界面上也只有展示名。</p>
+
+    <p>目录本身是加密的：<code>~/.qoder-cn/.models/&lt;uid&gt;/catalog-v6|v7</code> 是 base64 文本，解码后开头是 <code>QMC</code> magic，后面的内容解不开。客户端每启动会拉 <code>/api/v2/model/list</code>（本次窗口 225 次），所以换模型、加档位、灰度都是服务端的事。</p>
+
+    <p><strong>BYOK 是一等公民</strong>：<code>settings.json</code> 里的 <code>providers.*</code> 可以挂任意 OpenAI 兼容端点，<code>byok_model_profiles</code> 表记录 <code>endpoint_url</code>、<code>protocol_style</code>、<code>is_vision</code>、<code>is_reasoning</code>、<code>efforts_json</code>。本机就挂了一个本地网关（62 个模型），传输标记是 <code>custom-openai</code>，而产品自带链路标记是 <code>legacy</code>（SSE）。</p>
+
+    <p><strong>后端痕迹</strong>：包里同时存在两套 API 形状——Qoder 自己的 <code>/api/v2/service/pro/sse/agent_chat_generation</code>，以及 DashScope 风格的 <code>/api/v2/service/pro/invoke/chat_like</code>、<code>generateImage</code>、<code>videos</code>、<code>/api/v1/services/aigc/multimodal-generation/generation</code>；embedding 用的是 <code>text-embedding-v3/v4</code>；扩展市场包放在 <code>*.oss-accelerate.aliyuncs.com</code>；computer-use helper 的签名主体是「Hangzhou Yundian Technology Company Limited」。拼起来，云侧大概率是阿里云百炼 + OSS 这条线。</p>
+
+    <h2>七、「手」和「眼」：四个执行器</h2>
+
+    <p>Agent 的差距常常不在模型，而在能不能真的动手。Qoder 这块投得很重，而且是<strong>四个独立的进程/包</strong>：</p>
+
+    <p><strong>1. 代码检索（qoder-search）</strong>。5.4 MB 压缩 bundle，通过 MCP 暴露 <code>SearchKnowledge</code>、<code>SearchCodebase</code>、<code>SearchWiki</code>、<code>ReadWiki</code>、<code>ReadModuleKnowledge</code>。本地带 <code>rg</code>（4.5 MB）和一个自研原生模块 <code>mtree</code>（1.7 MB）——从 <code>/codebase/sync/{getMerkleNode,batchGetMerkleNodes,updateMerkleNodes}</code> 这组端点看，是 Merkle 树式的增量同步；embedding / rerank / chunk 检索走远端 <code>/api/v2/service/codebase/*</code>。顺带纠正一个常见猜测：bundle 里 <code>trigram</code>、<code>bm25</code>、<code>FTS5</code> 计数全为 0，本地并没有 BM25 倒排。</p>
+
+    <p><strong>2. 电脑操控（computer-use）</strong>。不是主进程里的一个模块，而是一个独立签名的 app：<code>com.qoder.cn.computeruse</code> 2.2.13，<code>LSUIElement</code>（无 Dock 图标），已公证。里面还有 Bridge、LockScreenGuardian 和一套 <code>LockedUse</code> 安装器 + 授权插件。协议是 unix socket、单帧上限 1 MiB、初始化超时 5 秒。它的 entitlements 只有一条 <code>com.apple.security.automation.apple-events</code>，Info.plist 里也只声明了 Apple Events 用途串——辅助功能和屏幕录制走运行时 TCC，不在清单里写。<code>LockedUse</code> 的语义从配置文案能看出来：接管期间锁屏，键盘或点击会重新锁定。</p>
+
+    <p><strong>3. 手机操控（phone-use）</strong>。84.7 MB，4,085 个文件，带 <code>@appium/*</code>、<code>appium-ios-device</code>、<code>scrcpy-server.jar</code>。MCP <code>mobile</code> 暴露 39 个工具：Android 11 个（<code>android_connect/observe/tap/type_text/open_app/batch…</code>），iOS 28 个（<code>ios_connect/observe/install_runner/check_signing/provision_signing…</code>）。这是把移动端自动化真做进了客户端，而不是发个链接让用户自己点。</p>
+
+    <p><strong>4. 站点（sites）</strong>。22 个工具，覆盖 <code>publish_site</code>、<code>update_access_policy</code>、<code>create_database_migration</code>、<code>update_database_row</code>、<code>get_function_logs</code>、<code>get_analytics</code>。首页那个「站点」入口后面是一整套「建站 + 数据库 + 函数 + 访问控制 + 分析」的托管面。</p>
+
+    <p>另外还有：<code>canvas</code>（内嵌 esbuild-wasm 14 MB，跑 <code>.canvas.tsx</code>）、<code>office</code>（pptx 预览器，带 harfbuzz wasm）、<code>knowledge.center</code>（<code>qoder-qmind</code> + <code>repowiki</code> 两个 MCP，19 个工具）。语音侧有 <code>/api/v2/service/ws/asr</code> 和实时语音会话，硬件侧甚至接了大疆麦克风的按键。</p>
+
+    <h2>八、遥控与协作：十五张 rc_* 表</h2>
+
+    <p>首页那个「手机遥控电脑」不是投屏，是一条完整的会话通道：</p>
+
+    <ul>
+      <li>信令：<code>/api/v1/remote/qoder/remote-control/enable</code>、<code>/status</code>，会话侧 <code>/api/v1/remote/code/sessions</code>；请求头带 <code>X-Qoder-Remote-Protocol-Version</code>、<code>X-Qoder-Remote-Device-Identity-Version</code>、<code>X-Qoder-Remote-Api-Version</code>。</li>
+      <li>载荷：<code>remoteControlProcess.js</code> 会以只读方式打开会话库，把一轮轮事件整理成带 <code>anchor</code>、<code>fact</code>、<code>events</code>、<code>offset</code>、<code>len</code> 的增量流写盘，单帧上限 32 MB，路径必须落在会话目录内。这是「可续传的事件日志」，不是「把整段对话发过去」。</li>
+      <li>状态：<code>rc_ingress_environments/bindings/inbox/deliveries/timeline/management</code> 管入口与投递，<code>rc_history_sync</code> + <code>rc_history_body_proofs</code> 管历史对齐与正文校验，<code>rc_identity_migrations</code> + <code>rc_scope_continuity</code> 管身份与作用域续接。十五张表拼起来，是一条「准入 → 同步 → 续接」的链路。</li>
+    </ul>
+
+    <p>协作侧则是另一套：<code>discussion_*</code>、<code>collaboration_*</code>、<code>issue_agent_*</code>，加上 <code>agent_teams</code>（<code>leader_server_agent_id</code>、<code>invocation_policy</code>）和 <code>agent_registration_outbox</code>（本地 Agent 注册到云端的发件箱）。产品上叫「Agent / Team / 讨论」，实现上是「本地实体 + 云端注册 + 消息投递」。</p>
+
+    <h2>九、一次任务的旅程</h2>
+
+    <pre class="arch"><code>User → React workbench → 主进程（IPC）
+  ├─ 写 chat_sessions / turn 状态
+  ├─ 组装上下文：qoder-search（rg + mtree + 向量）
+  └─ spawn worker（--sdk）
+       ↓
+  agent loop（~36 工具 + hooks + skills）
+       ↓
+  本地执行：shell(node-pty) / 文件 / 电脑操控 / 手机 / 站点
+       ↓
+  推理：gateway.qoder.com.cn（逻辑键 → 网关改派 → SSE）
+       ↓
+  落库：messages / turn_file_change_* / FTS / 记忆 / 技能演化建议</code></pre>
+
+    <ol>
+      <li>用户输入 → 渲染层 → 主进程，先落一条 <code>chat_sessions</code>，再按 <code>product_mode</code> 选系统提示词。</li>
+      <li>检索层用 <code>rg</code> + <code>mtree</code> 算增量，向量检索走 <code>/codebase/search/retrieveChunks</code>。</li>
+      <li>worker 起 agent loop，按 <code>default/auto/bypass</code> 三档过权限，<code>auto</code> 走分类器。</li>
+      <li>推理请求带逻辑键和 reasoning effort，走 SSE；<code>auto</code> 由目录策略挑一个 <code>*model</code>。</li>
+      <li>工具落到本地 shell、computer-use、phone-use 或 sites。</li>
+      <li>每轮结束写 <code>turn_file_change_sets/patches</code>，同步 FTS，按 <code>extractionEveryNTurns=5</code> 抽记忆。</li>
+      <li>会话结束（或用户确认）后，可能生成一条 <code>skill_evolution_suggestions</code>，由独立会话把经验写成技能。</li>
+    </ol>
+
+    <h2>十、和上一篇 DuMate 的对照</h2>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr><th>维度</th><th>DuMate v1.0.88</th><th>Qoder CN 0.4.11</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>壳</td><td>Electron 43 + React</td><td>Electron 43.1.1 + React 19</td></tr>
+          <tr><td>本地控制面</td><td>Go/Gin <code>:52701</code>，三个 SQLite</td><td>Node 主进程 <code>:62445</code>，一张 110 表 SQLite</td></tr>
+          <tr><td>Agent 运行时</td><td>OpenCode 定制（Bun，28 工具）</td><td>Qoder CLI worker（33 MB 混淆，约 36 工具，Claude Code 血统）</td></tr>
+          <tr><td>模型层</td><td>逻辑 ID + 网关 + <strong>真实模型回显</strong></td><td>15 个逻辑键 + 网关 + <strong>目录加密、不回显</strong></td></tr>
+          <tr><td>手和眼</td><td>轻沙箱 / VM / 电脑操作 / 内置浏览器</td><td>本机 shell / rg+mtree / 独立 Computer Use app / Appium 手机</td></tr>
+          <tr><td>差异化</td><td>端云协同、BOS、企业 BYOM</td><td>站点托管、自动化、遥控、Agent Team、技能自进化</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>有意思的是两家在模型层做了同一个决定（逻辑模型与真实后端解耦），却在可观测性上分道扬镳：DuMate 用 <code>X-Dumate-Gw-Realmodel</code> 把头回显给客户端，Qoder 选择不暴露。前者利于排障和用户沟通，后者利于统一体验和商业灵活度——这是个产品选择，不是技术优劣。</p>
+
+    <h2>十一、设计取舍：Qoder 做对了什么</h2>
+
+    <ol>
+      <li><strong>把「工作台」当第一性，而不是把「对话」当第一性。</strong> 会话、站点、自动化、扩展、浏览器是并列的面，<code>product_mode</code> 只有 coding/general 两档，说明它默认用户是来「做事」的。</li>
+      <li><strong>模型层抽象得彻底。</strong> 十五个逻辑键、<code>model</code> 字段留空、目录服务端下发、BYOK 一等公民——换供应商、加档位、灰度、企业自带模型，全是配置问题。</li>
+      <li><strong>复用成熟 harness，把创新压在「手」上。</strong> 工具命名、<code>SKILL.md</code>、hooks、agents、<code>chat.proto</code> 都能看到 Claude Code 的影子。这不是偷懒，是把最不容易差异化、也最容易踩坑的部分标准化，然后把预算投到电脑操控、手机操控、站点托管这些真差异点。</li>
+      <li><strong>本地控制面 SQLite 化。</strong> 110 张表把会话、遥控、协作、市场、自进化全收在本地：离线可用、可迁移、可审计，也让「历史任务」不依赖云端。</li>
+      <li><strong>插件双层设计。</strong> 宿主侧 <code>.qoder-app-plugin</code>（views/services/permissions）和 Agent 侧 <code>.qoder-plugin</code>（skills/mcpServers/commands）分离；十个内置扩展 144 MB，等于自带一套「Office + Canvas + 站点 + 手机 + 知识库」。</li>
+      <li><strong>混淆划了边界。</strong> 核心链路混淆，扩展层完全不混淆。这既保护了推理与调度逻辑，又让能力层可读、可调试、可被第三方照着写。</li>
+    </ol>
+
+    <p>如果要挑毛病，最明显的是<strong>可观测性</strong>：日志不落任何 header，模型代号到真实后端的映射只在服务端，<code>catalog-v6/v7</code> 还是加密的。用户看到「Kimi-K3.1-Pro 高」，但没有任何办法确认这一次到底跑在谁身上。</p>
+
+    <h2>十二、未解的问题</h2>
+
+    <ul>
+      <li>十五个逻辑键里只观测到两个真实映射（<code>qfmodel</code>、<code>kmodel_latest</code>）；<code>gmodel</code>/<code>mmodel</code>/<code>dmodel</code> 是按命名推断的，没有实跑证据。</li>
+      <li><code>auto</code> 的路由策略没抓到：是打分、是规则、还是 LLM 决策，日志里只有结果没有依据。</li>
+      <li>模型级 fallback 没观测到，只看到端点级的地址 failover（<code>contractMaxAttempts=3</code>、<code>contractAddressFailover=true</code>）。</li>
+      <li><code>catalog-v6/v7</code> 是 <code>QMC</code> 开头的密文，解不开；目录的真实结构未知。</li>
+      <li>遥控协议的帧格式只从落盘逻辑反推，端到端没抓包。</li>
+      <li><code>auto_classifier</code> 用什么模型、什么提示词判定「这条命令能不能跑」，没有证据。</li>
+      <li>样本只有 macOS arm64、单账号、十天窗口；Windows 端和 Linux 端的执行器差异未覆盖。</li>
+    </ul>
+
+    <h2>附录：关键端点</h2>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead>
+          <tr><th>用途</th><th>地址</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>模型网关（推理/安全/中心/快速）</td><td><code>https://gateway.qoder.com.cn</code></td></tr>
+          <tr><td>开放接口（账号/套餐/模型目录）</td><td><code>https://openapi.qoder.com.cn</code></td></tr>
+          <tr><td>模型列表</td><td><code>/api/v2/model/list</code></td></tr>
+          <tr><td>推理（产品链路 SSE）</td><td><code>/api/v2/service/pro/sse/agent_chat_generation</code></td></tr>
+          <tr><td>推理（OpenAI 形状）</td><td><code>/api/v2/service/pro/invoke/chat_like</code></td></tr>
+          <tr><td>图像 / 视频</td><td><code>/api/v2/service/pro/generateImage</code>、<code>/videos</code></td></tr>
+          <tr><td>语音识别</td><td><code>/api/v2/service/ws/asr</code></td></tr>
+          <tr><td>代码库同步 / 检索 / 向量</td><td><code>/api/v2/service/codebase/{sync,file,search,embedding,rerank}</code></td></tr>
+          <tr><td>遥控</td><td><code>/api/v1/remote/qoder/remote-control/{enable,status}</code>、<code>/api/v1/remote/code/sessions</code></td></tr>
+          <tr><td>额度 / 套餐</td><td><code>/api/v2/quota/usage</code>、<code>/api/v2/user/plan</code></td></tr>
+          <tr><td>本地 MCP router</td><td><code>http://127.0.0.1:62445</code></td></tr>
+          <tr><td>插件市场</td><td><code>https://qoder.cn/apphub/api/v1/marketplace/marketplace.json</code></td></tr>
+          <tr><td>运行时下载模板</td><td><code>https://static.qoder.com.cn/qoder-cli-cn/dev/releases/&lt;ver&gt;/qoderclicn-worker-runtime-&lt;target&gt;.tgz</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="small">说明：以上端点与端口来自 0.4.11 的配置、二进制与运行日志，仅用于架构分析；不同版本、不同平台可能不同。</p>
+
+    <h2>参考</h2>
+
+    <ul>
+      <li><a href="https://qoder.com" target="_blank">Qoder 官网</a></li>
+      <li><a href="https://docs.qoder.com" target="_blank">Qoder 文档</a></li>
+      <li><a href="https://qoder.cn/apphub/api/v1/marketplace/marketplace.json" target="_blank">扩展市场索引</a></li>
+      <li><a href="blog_dumate_architecture.html">同系列：拆开百度搭子 DuMate v1.0.88</a></li>
+    </ul>
+
+  </div>
+
+  <nav class="article-nav">
+    <span class="article-nav-empty"></span>
+    <a class="article-nav-link next" href="blog_dumate_architecture.html">
+      <span class="article-nav-label">下一篇 →</span>
+      <span class="article-nav-title">拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关</span>
+    </a>
+  </nav>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博成 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+<script src="js/theme.js"></script>
+
+</body>
+</html>

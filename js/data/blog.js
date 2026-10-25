@@ -4,6 +4,13 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.BLOG_POSTS = [
   {
+    title: "拆开 Qoder CN 0.4.11：Electron 工作台、Claude Code 血统的运行时与十五个逻辑模型",
+    url: "blog_qoder_architecture.html",
+    date: "2026-10-25",
+    desc: "Electron 43 + React 19 工作台 + 33 MB Agent 运行时 + 110 表 SQLite + 15 个逻辑模型键：电脑/手机操控、遥控与插件层全拆一遍。",
+    tags: ["AI Agent", "Qoder", "技术拆解", "架构"]
+  },
+  {
     title: "拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关",
     url: "blog_dumate_architecture.html",
     date: "2026-10-25",
