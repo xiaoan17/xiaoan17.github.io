@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关 | 安博成</title>
+<meta name="description" content="2026-10-25 版本拆解：Electron + Go 控制面 + OpenCode 运行时 + 多模型网关；GLM-5.2、Kimi-K2.6、DeepSeek-V4.1-Flash、Qwen3.5-35B-A3B 的真实路由。">
+<meta name="color-scheme" content="light dark">
+<meta property="og:title" content="拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关">
+<meta property="og:description" content="2026-10-25 版本拆解：Electron + Go 控制面 + OpenCode 运行时 + 多模型网关；GLM-5.2、Kimi-K2.6、DeepSeek-V4.1-Flash、Qwen3.5-35B-A3B 的真实路由。">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://xiaoan17.github.io/blog_dumate_architecture.html">
+<meta property="og:image" content="https://xiaoan17.github.io/banner.jpg">
+<meta property="article:published_time" content="2026-10-25">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script>
+(function(){try{var t=localStorage.getItem('anbc-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Serif+SC:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/theme.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/article.css">
+<style>
+/* 本页额外的表格、提示框与架构图样式，全部走主题变量 */
+.article-body .table-wrap { overflow-x: auto; margin: 20px 0; }
+.article-body table {
+  width: 100%; border-collapse: collapse; margin: 0; font-size: 0.9em; line-height: 1.6;
+}
+.article-body th, .article-body td {
+  border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top;
+}
+.article-body th {
+  background: var(--ivory); color: var(--near-black); font-weight: 500; white-space: nowrap;
+}
+.article-body td code { white-space: nowrap; }
+.article-body table.wide td:first-child { white-space: nowrap; }
+.article-body .callout {
+  border: 1px solid var(--border); background: var(--ivory); border-radius: 8px;
+  padding: 14px 16px; margin: 22px 0;
+}
+.article-body .callout-title {
+  font-family: var(--mono); font-size: 0.72em; letter-spacing: 1px;
+  color: var(--brand); margin-bottom: 8px;
+}
+.article-body .callout p:last-child { margin-bottom: 0; }
+.article-body pre.arch { font-size: 0.72em; line-height: 1.55; }
+.article-body .small { color: var(--stone); font-size: 0.88em; }
+.article-body .table-hint { display: none; }
+body[data-article] { overflow-x: hidden; }
+@media (max-width: 768px) {
+  .article-body table { font-size: 0.82em; }
+  .article-body table.wide { min-width: 560px; }
+  .article-body .table-hint { display: block; font-family: var(--mono); font-size: 0.72em; color: var(--stone); margin: -6px 0 6px; }
+  .article-body pre.arch { font-size: 0.62em; }
+}
+</style>
+</head>
+<body data-article>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-brand" onclick="location.href='index.html'">安博成</div>
+    <div class="nav-tabs">
+      <a class="nav-tab" href="index.html">首页</a>
+      <a class="nav-tab" href="index.html#blog">博客</a>
+      <a class="nav-tab" href="index.html#projects">项目</a>
+      <a class="nav-tab" href="index.html#recommend">Anbc 推荐</a>
+      <a class="nav-tab" href="index.html#contact">联系</a>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="切换深色模式"></button>
+  </div>
+</nav>
+
+<div class="container article-main">
+  <a class="back-link" href="index.html#blog" style="display:inline-flex;align-items:center;gap:6px;padding:20px 0;font-family:var(--mono);font-size:0.8em;color:var(--stone);letter-spacing:0;">← 返回博客</a>
+
+  <div class="article-header">
+    <h1 class="article-title">拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关</h1>
+    <div class="article-meta">
+      ✍️ 安博成 · 📅 2026-10-25 · 🏷️ AI Agent, DuMate, 技术拆解, 架构
+    </div>
+  </div>
+
+  <div class="article-body">
+
+    <p>百度搭子 DuMate 是 2026 年讨论度很高的国产通用 Agent 之一。它强调「真干活」：跨应用、跨文件、操作浏览器、直接交付文档和网页。产品页写得很满，技术细节却很少。于是 10 月 25 日，我把本机安装的 macOS 版 v1.0.88 拆了一遍。</p>
+
+    <p>先说明边界：这是只读分析，没有绕过鉴权，也没有展开任何用户对话内容。我看的是安装包结构、配置文件、二进制符号，以及运行日志里的请求元数据和响应头。结论只代表这个版本、这个平台。</p>
+
+    <div class="callout">
+      <div class="callout-title">TL;DR</div>
+      <p>DuMate 是「Electron 壳 + Go 本地控制面 + OpenCode 定制运行时 + 本地/云端双执行环境 + 多模型网关」。模型侧最重要的设计是<strong>逻辑模型 ID 与真实后端解耦</strong>：客户端写 <code>glm-5</code>，官方预置展示 GLM-5.2；L0 实跑却是 DeepSeek-V4.1-Flash，路由和摘要用 Qwen3.5-35B-A3B。</p>
+    </div>
+
+    <h2>一、探测对象与方法</h2>
+
+    <div class="table-wrap">
+      <table>
+        <tbody>
+          <tr><th>客户端版本</th><td>v1.0.88（构建于 2026-10-24）</td></tr>
+          <tr><th>平台</th><td>macOS arm64</td></tr>
+          <tr><th>桌面壳</th><td>Electron 43.1.1</td></tr>
+          <tr><th>安装包</th><td>DMG 591 MB；安装后约 1.0 GB</td></tr>
+          <tr><th>app.asar</th><td>约 101 MB</td></tr>
+          <tr><th>移动端</th><td>原生 Android（Kotlin/Compose），<code>DumateMobile/1.20.0.10</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>方法很朴素：</p>
+    <ul>
+      <li>用 <code>@electron/asar</code> 解开 <code>app.asar</code>，看主进程与前端产物；</li>
+      <li>用 <code>strings</code> 扫随包二进制，找模块名、模型 ID、路由常量；</li>
+      <li>读 <code>config/</code> 与运行数据目录里的 JSON、SQLite schema；</li>
+      <li>读 <code>log/desktop-main/Gateway.log</code> 的请求行与响应头；</li>
+      <li>对照官方文档、模型管理页截图和公开报道。</li>
+    </ul>
+
+    <div class="callout">
+      <div class="callout-title">边界</div>
+      <p>只观察到一个 L0 会话；L1/L2（Turbo/Ultra）没有实测。只覆盖 macOS arm64，Windows 端可能有差异。端口、内部 hostname、模型别名都可能随版本变化。</p>
+    </div>
+
+    <h2>二、架构总览</h2>
+
+    <pre class="arch"><code>┌────────────────────────────────────────────────────────────┐
+│ Electron 43 + React 渲染层（任务/项目/技能/文件/产出物）      │
+└───────────────────────────┬────────────────────────────────┘
+                            │ IPC / 本地 HTTP
+┌───────────────────────────▼────────────────────────────────┐
+│ dumate-main-server（Go/Gin，本地控制面，:52701）             │
+│ 会话/项目/技能/插件/模型注册/配额/代理/BOS/遥测/定时任务      │
+└───────┬───────────────────┬───────────────────┬────────────┘
+        │                   │                   │
+┌───────▼─────────┐ ┌───────▼─────────┐ ┌───────▼────────────┐
+│ dumate-opencode │ │ dumate-router   │ │ sandbox-manager    │
+│（Bun，Agent循环）│ │（Bun，模型/任务 │ │ + vmmgr + cu       │
+│ 28个工具/Skill/ │ │  路由，:52036）  │ │ 轻沙箱/VM/电脑操作  │
+│ MCP/子代理/记忆 │ │                 │ │ 浏览器 IAB/CDP     │
+└───────┬─────────┘ └───────┬─────────┘ └───────┬────────────┘
+        └───────────────────┼───────────────────┘
+                            │ HTTPS
+┌───────────────────────────▼────────────────────────────────┐
+│ 百度云：dumate-svc 网关 / 千帆 Qianfan / api.dumate.cn       │
+│ BOS / 秒哒 / AppBuilder / GLM / Kimi / DeepSeek / Qwen ...   │
+└────────────────────────────────────────────────────────────┘</code></pre>
+
+    <p>从外到内可以分成五层：</p>
+    <ol>
+      <li><strong>渲染层</strong>：Electron + React，负责界面与交互。</li>
+      <li><strong>本地控制面</strong>：Go/Gin，负责会话、项目、技能、模型注册、配额、文件、遥测。</li>
+      <li><strong>Agent Runtime</strong>：OpenCode 定制版，负责 agent loop、工具、技能、子代理、记忆。</li>
+      <li><strong>执行环境</strong>：轻沙箱、VM、电脑操作、内置浏览器。</li>
+      <li><strong>云服务</strong>：模型网关、千帆、BOS、企业 API。</li>
+    </ol>
+
+    <p>这五层里，最容易被忽略的是第二层。大多数桌面 AI 产品只有一个壳加一个云 API；DuMate 在本地放了一个完整的控制面。</p>
+
+    <h2>三、桌面壳：不是 WebView 套壳</h2>
+
+    <p>第一个反直觉的点是：它没有用系统 WebView 套一个网页，而是完整的 Electron 43.1.1 + React。安装包里能看到 <code>Electron Framework</code>、四个 Helper、Squirrel 更新器，以及 <code>app.asar</code> 里约 101 MB 的前端与主进程代码。</p>
+
+    <p>还有四个原生 Node 插件：<code>cookie_crypto</code>、<code>desktop_native</code>、<code>device_info</code>、<code>macos_notification_status</code>。它们分别处理 Cookie 加密、桌面能力、设备信息和 macOS 通知状态。</p>
+
+    <p>用 Electron 的代价是包大、内存高；收益是跨平台一致、桌面集成能力强，且可以直接复用 Node 生态。对一个要操作本地文件、浏览器、系统通知的 Agent 来说，这笔账是划算的。</p>
+
+    <p>但渲染层不直接连云端。Agent 请求先到本地 Go 服务——这是它与「网页套壳」最大的区别。</p>
+
+    <h2>四、本地控制面：一个装在桌面上的 Go 服务</h2>
+
+    <p><code>dumate-main-server</code> 是 57 MB 的 Go 二进制，配置里明确写着 <code>gin_mode: release</code>。从符号表能看出它的模块划分：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>模块</th><th>作用</th></tr></thead>
+        <tbody>
+          <tr><td><code>apis/service</code></td><td>本地 HTTP API</td></tr>
+          <tr><td><code>clients/opencode</code></td><td>调用 Agent Runtime</td></tr>
+          <tr><td><code>scheduler</code></td><td>定时任务</td></tr>
+          <tr><td><code>modelregistry</code></td><td>模型注册与选择</td></tr>
+          <tr><td><code>skill</code> / <code>plugin</code> / <code>connector</code></td><td>能力生态</td></tr>
+          <tr><td><code>filemanage</code> / <code>clients/bos</code></td><td>文件与产物</td></tr>
+          <tr><td><code>tracking</code> / <code>otelrelay</code></td><td>遥测与 OpenTelemetry</td></tr>
+          <tr><td><code>remotecontrol</code> / <code>deskhub</code></td><td>远程控制与多端</td></tr>
+          <tr><td><code>security</code> / <code>relaycred</code></td><td>安全与凭证</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>它把会话、项目、技能、插件、模型、配额、文件、遥测都收在自己这里。本地还有 SQLite：<code>opencode.db</code>（会话/消息）、<code>desktop.db</code>（文件任务）、<code>memory.db</code>（记忆）。</p>
+
+    <p>一次运行里观察到的本地端口：<code>52701</code>（控制面）、<code>52609</code>（OpenCode）、<code>52036</code>（Router）、<code>19228</code>（浏览器中继）。端口是动态的，不必记。</p>
+
+    <p>这也意味着历史任务、技能管理这类操作不必每次依赖云端。</p>
+
+    <h2>五、Agent Runtime：OpenCode 定制版</h2>
+
+    <p><code>dumate-opencode</code> 约 104 MB，Bun 编译，配置直接使用 <code>https://opencode.ai/config.json</code> 作为 schema。默认 provider 配置是这样的：</p>
+
+    <pre><code>{
+  "model": "QianfanPersonalQuota/glm-5",
+  "provider": {
+    "QianfanPersonalQuota": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:52701/api/qianfanproxy/v1",
+        "apiKey": "nokey"
+      },
+      "models": {
+        "glm-5": {
+          "id": "model-text",
+          "limit": { "context": 192000, "output": 128000 }
+        }
+      }
+    }
+  }
+}</code></pre>
+
+    <p>注意两个细节：<code>apiKey</code> 是 <code>nokey</code>，因为真正的鉴权在本地代理；<code>glm-5</code> 的 <code>id</code> 是 <code>model-text</code>，说明客户端用的是逻辑别名，不是真实模型名。</p>
+
+    <p>运行时实际注册了 28 个工具，按用途可以分成九类：</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>类别</th><th>工具</th></tr></thead>
+        <tbody>
+          <tr><td>文件/命令</td><td><code>bash</code>、<code>read</code>、<code>write</code>、<code>edit</code>、<code>glob</code>、<code>grep</code></td></tr>
+          <tr><td>网络</td><td><code>webfetch</code>、<code>websearch</code></td></tr>
+          <tr><td>规划</td><td><code>todowrite</code>、<code>todoread</code>、<code>phase-change</code>、<code>requirementread</code></td></tr>
+          <tr><td>多代理</td><td><code>task</code></td></tr>
+          <tr><td>记忆</td><td><code>memory_load</code>、<code>memory_search</code>、<code>memory_write</code></td></tr>
+          <tr><td>能力</td><td><code>skill</code>、<code>plugin</code></td></tr>
+          <tr><td>调度</td><td><code>scheduler_action</code>、<code>scheduler_create_job</code></td></tr>
+          <tr><td>交付</td><td><code>file_export</code>、<code>file_download</code>、<code>mount_directory</code></td></tr>
+          <tr><td>其他</td><td><code>get_location</code>、<code>extension-sync</code>、<code>question</code>、<code>date_calc</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>这 28 个工具是运行时实际注册的，不是文档里的愿景。<code>task</code> 意味着子代理，<code>skill</code>/<code>plugin</code> 意味着能力包，<code>memory_*</code> 意味着长期记忆。</p>
+
+    <p>本机 <code>data/plugins/official/</code> 下有 5 个官方套件：设计、教育、金融投资、求职、自媒体。插件格式是 <code>.claude-plugin/plugin.json</code> + <code>skills/&lt;name&gt;/SKILL.md</code>——和 Claude Code 的约定高度兼容。再加上 MCP Server、连接器，能力生态就搭起来了。</p>
+
+    <p>记忆层也值得单独说：<code>memory.db</code> 是 SQLite，带 FTS5 trigram 索引；另有 <code>MEMORY.md</code>、<code>USER.md</code>、<code>SOUL.md</code> 三个文本层。记忆不是简单塞进 context，而是分块、检索、提升（promote）。</p>
+
+    <p>所以更准确的说法是：DuMate 的运行时是一个 Agent OS，而不是一个聊天客户端。</p>
+
+    <h2>六、路由层：先决定「谁来干」，再决定「用哪个模型」</h2>
+
+    <p>DuMate 的请求先经过一层任务路由，再经过一层模型路由。路由维度至少有五个：</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>维度</th><th>取值</th><th>含义</th></tr></thead>
+        <tbody>
+          <tr><td><code>task_type</code></td><td><code>dumate</code> / <code>ai_assistant</code></td><td>主 Agent 还是轻助手</td></tr>
+          <tr><td><code>model_type</code></td><td><code>text</code> / <code>multimodal</code></td><td>纯文本还是多模态</td></tr>
+          <tr><td><code>platform</code></td><td><code>desktop</code> / <code>cloud</code></td><td>本地还是云端执行</td></tr>
+          <tr><td><code>feature</code></td><td><code>photo_solve</code> 等</td><td>特定功能路由</td></tr>
+          <tr><td><code>reason</code></td><td><code>session_sticky</code>、<code>fixed_model_selected</code>、<code>deep_think_rule</code>、<code>attachment_rule</code>、<code>skill_rule</code>、<code>plugin_rule</code>、<code>llm_decision</code></td><td>为什么这么选</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>决策顺序是：本地规则 → 远端 <code>routing/decide</code>（默认 3 秒超时）→ 本地 LLM 路由兜底。远端服务在代码里的默认地址是 <code>http://dumate-meta-harness:8080/routing/decide</code>；兜底模型是千帆上的 <code>qwen3.5-35b-a3b</code>。</p>
+
+    <p>模型档位内部是 <code>L0 / L1 / L2</code>，请求头带 <code>X-Dumate-AutoModel-Level</code>、<code>X-Dumate-AutoModel-Target</code>、<code>X-Dumate-Model-Target</code>。网关响应头会回传 <code>X-Dumate-Gw-Realmodel</code> 和 <code>X-Dumate-Gw-Realmodel-DisplayName</code>。</p>
+
+    <p>这套设计最妙的地方是可观测：自动模式下，客户端会把真实模型回写到消息里。用户能看到「这次到底用了谁」，而不是只看到一个模糊的「智能模式」。</p>
+
+    <h2>七、执行环境：把「手」和「眼」也做进客户端</h2>
+
+    <p>Agent 的差距，很多时候不在模型，而在「手」和「眼」。DuMate 在这块投入很重：</p>
+
+    <ul>
+      <li><strong>轻沙箱</strong>：Python/Node 运行时分层，<code>requirements.txt</code> 锁定了 <code>python-docx</code>、<code>python-pptx</code>、<code>openpyxl</code>、<code>pandas</code>、<code>PyMuPDF</code>、<code>reportlab</code>、<code>typst</code> 等办公/文档依赖；Node 包单独一层。按需安装，不随版本全量重下。</li>
+      <li><strong>完整 VM</strong>：<code>dumate-vm-manager</code> + 约 47 MB 的 <code>seed.iso.zst</code>，用于更重的隔离执行。</li>
+      <li><strong>电脑操作</strong>：<code>cu</code> 是 Python 3.9 打包的二进制，链接了 AppKit、Quartz、ScreenCaptureKit，能截屏和做 GUI 自动化。</li>
+      <li><strong>浏览器</strong>：内置浏览器（IAB）通过 CDP relay，<code>dumate-browser-extension-relay</code> 监听本地端口；也支持 Chrome/Edge 扩展接管，带权限模式。</li>
+      <li><strong>文件</strong>：<code>mount_directory</code> 挂载工作区，<code>file_export</code>/<code>file_download</code> 导出，产物可上传 BOS 并注册 artifact。</li>
+    </ul>
+
+    <p>这些能力让它可以真的改本地文件、点本地软件，而不是只给建议。代价是安全边界更复杂：目录权限、危险操作二次确认、沙箱/VM 隔离、审计日志，一个都不能少。</p>
+
+    <h2>八、模型矩阵：一个入口，四家后端</h2>
+
+    <p>这是我最关心的部分。把配置、文档截图和网关日志拼在一起，能得到这样一张表：</p>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>角色</th><th>逻辑 ID</th><th>真实后端</th><th>证据</th></tr></thead>
+        <tbody>
+          <tr><td>主 Agent</td><td><code>QianfanPersonalQuota/glm-5</code> → <code>model-text</code></td><td>官方预置 <strong>GLM-5.2</strong>；网关可改派</td><td>客户端配置 + 文档截图</td></tr>
+          <tr><td>多模态</td><td><code>model-mm</code>（<code>qianfan-multimodal</code>）</td><td><strong>Kimi-K2.6</strong></td><td>文档截图 + 二进制</td></tr>
+          <tr><td>GUI 操作</td><td><code>model-gui-use</code></td><td>专用 GUI 模型</td><td>二进制</td></tr>
+          <tr><td>自动 L0</td><td><code>dm-auto-model/text.L0</code></td><td><strong>DeepSeek-V4.1-Flash-Low-Latency</strong></td><td>网关响应头</td></tr>
+          <tr><td>推理摘要</td><td><code>model-reason-summary</code></td><td><strong>Qwen3.5-35B-A3B</strong></td><td>网关响应头</td></tr>
+          <tr><td>路由/追问</td><td><code>qwen3.5-35b-a3b</code></td><td>Qwen3.5-35B-A3B</td><td>路由器常量</td></tr>
+          <tr><td>交付物校验</td><td><code>model-artifact-validate</code></td><td>未暴露</td><td>二进制</td></tr>
+          <tr><td>企业自带</td><td>任意 OpenAI-compatible</td><td>企业自建</td><td>官方文档</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>官方预置两条，来自企业版模型管理页截图：<strong>GLM-5.2</strong>（<code>model-text</code>，「超长无损上下文，长程工程任务强」）和 <strong>Kimi-K2.6</strong>（<code>model-mm</code>，「原生多模态，多模态理解能力强」）。客户端配置键仍写作 <code>glm-5</code>。截图里表格还能滚动，所以不能排除下面还有别的条目。</p>
+
+    <p>但日志里，<code>model-text</code> 的标题生成请求返回的是 <code>deepseek-v4.1-flash-low-latency</code>；<code>model-reason-summary</code> 返回的是 <code>n2p5sdmw_qwen35-35b-a3b</code>。这说明逻辑 ID 不是硬绑定，网关会按任务、负载、档位改派。</p>
+
+    <p>档位对应关系大致是：</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>UI 档位</th><th>内部枚举</th><th>本次观察</th></tr></thead>
+        <tbody>
+          <tr><td>Standard（日常任务，快速响应）</td><td><code>L0</code></td><td>DeepSeek-V4.1-Flash</td></tr>
+          <tr><td>Turbo（较复杂任务，平衡速度与质量）</td><td><code>L1</code></td><td>未抓到</td></tr>
+          <tr><td>Ultra（专业复杂任务，深度推理）</td><td><code>L2</code></td><td>未抓到</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p><code>L0/L1/L2</code> 是代码里确认的枚举；UI 与枚举的对应关系是从档位语义推断的，不是官方文档写死的。L0 明显走的是便宜、低延迟的路线；L1/L2 应该会切到更强的模型，但这次没有实测。</p>
+
+    <p>为什么没看到文心？本次样本里没有抓到 <code>ernie</code> 或「文心」的实跑模型头。这不等于百度不用文心，而是：客户端把模型抽象成 <code>model-text</code>/<code>model-mm</code>，不暴露厂牌；当前 L0 会话恰好走了 DeepSeek；官方预置列表可滚动，截图只露出两条。</p>
+
+    <p>更准确的结论是：<strong>DuMate 是一个多模型聚合网关；在这个版本的可观测路径里，百度自研模型只是候选之一。</strong>当前可观测到的主力是 GLM、Kimi、DeepSeek、Qwen。</p>
+
+    <p>企业版还支持 BYOM：管理员可以接 OpenAI Chat Completions 格式的自建模型，要求上下文和最大输出都不小于 128K，可开启图像理解，按部门控制可见范围。也就是说，模型层不仅能换，还能被企业接管。</p>
+
+    <h2>九、一次任务的旅程</h2>
+
+    <pre class="arch"><code>User → Electron → main-server → router ─┬→ local rules
+                                        ├→ meta-harness /routing/decide
+                                        └→ Qwen3.5 fallback
+                                  ↓
+                            OpenCode loop
+                                  ↓
+                    local proxy → dumate gateway
+                                  ↓
+                    DeepSeek / GLM / Kimi / Qwen
+                                  ↓
+                    tools + sandbox + browser + BOS</code></pre>
+
+    <ol>
+      <li>用户输入 → Electron 渲染层 → <code>dumate-main-server</code>。</li>
+      <li>本地规则 + 远端 meta-harness + Qwen3.5 路由 → 决定任务类型、模型类型、平台、档位。</li>
+      <li>OpenCode 组装系统提示词（AGENTS/SOUL/USER/MEMORY）、技能、工具、MCP。</li>
+      <li>本地代理补鉴权/配额/会话头 → <code>dumate-svc.baidu.com/gateway/apis/v1/chat/completions</code>。</li>
+      <li>网关选后端，SSE 流式返回；响应头带真实模型。</li>
+      <li>工具进轻沙箱/VM；浏览器走 IAB/CDP；文件走本地/BOS。</li>
+      <li>记忆写入 <code>memory.db</code>；遥测、配额、OpenTelemetry 上报。</li>
+    </ol>
+
+    <h2>十、设计取舍：DuMate 到底做对了什么</h2>
+
+    <p>拆完之后，我觉得 DuMate 最值得学的不是某个模型，而是几个工程选择。</p>
+
+    <ol>
+      <li><strong>模型路由是产品能力，不是实现细节。</strong>逻辑 ID + 网关 + 真实模型回显，让换模型、分档位、做企业 BYOM 都变成配置问题，而不是重写客户端。</li>
+      <li><strong>Harness 工程决定下限。</strong>官方说通过 Harness 引擎优化，同等任务 Token 消耗降低 75%。这背后是上下文管理、工具编排、失败恢复、沙箱调度，不是换一个更大的模型。</li>
+      <li><strong>端云协同是差异点。</strong>本地文件、桌面软件、浏览器、语音/图像处理放本地；复杂推理、检索、跨应用编排放云端。纯云端 Agent 很难做到「改我桌面上这个文件」。</li>
+      <li><strong>生态兼容降低冷启动。</strong>复用 Claude Code 的插件/技能约定，再加上 MCP，第三方能力可以低成本迁入。</li>
+      <li><strong>可观测性。</strong><code>X-Dumate-Gw-Realmodel</code> 这种响应头看起来是个小设计，但它让路由可调试、可解释，也方便做用户沟通。</li>
+    </ol>
+
+    <p>如果我们要做一个类似的 Agent 产品，我会优先抄这三件事：<strong>逻辑模型层、沙箱执行层、真实模型回显</strong>。</p>
+
+    <h2>十一、未解的问题</h2>
+
+    <ul>
+      <li>L1/L2 的真实模型没有抓到；Turbo/Ultra 到底切到谁，需要再抓一次。</li>
+      <li>本次没有观察到 ERNIE/文心的实跑头；官方预置列表可能还有更多条目。</li>
+      <li><code>model-gui-use</code> 的具体厂牌没有在客户端暴露。</li>
+      <li>版本迭代很快，端口、别名、模型都可能变；本文只代表 v1.0.88。</li>
+      <li>企业版的私有化/专属部署形态没有覆盖。</li>
+    </ul>
+
+    <p>如果你也在拆 DuMate，欢迎交流。下一步我打算抓一次 Turbo/Ultra 的网关响应头，把 L1/L2 的模型映射补全。</p>
+
+    <h2>附录：关键端点</h2>
+
+    <p class="table-hint">表格较宽，移动端可左右滑动 →</p>
+
+    <div class="table-wrap">
+      <table class="wide">
+        <thead><tr><th>用途</th><th>地址</th></tr></thead>
+        <tbody>
+          <tr><td>模型网关</td><td><code>https://dumate-svc.baidu.com/gateway/apis/v1/chat/completions</code></td></tr>
+          <tr><td>千帆</td><td><code>https://qianfan.baidubce.com/v1/chat/completions</code></td></tr>
+          <tr><td>企业 API</td><td><code>https://api.dumate.cn/api/v1/agents</code></td></tr>
+          <tr><td>远端路由</td><td><code>http://dumate-meta-harness:8080/routing/decide</code></td></tr>
+          <tr><td>本地代理</td><td><code>http://127.0.0.1:&lt;port&gt;/api/qianfanproxy/v1</code></td></tr>
+          <tr><td>浏览器中继</td><td><code>http://127.0.0.1:&lt;port&gt;</code>（CDP relay）</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="small">说明：以上端点和端口来自 v1.0.88 的配置、二进制与运行日志，仅用于架构分析；不同版本、不同平台可能不同。</p>
+
+    <h2>参考</h2>
+
+    <ul>
+      <li><a href="https://www.dumate.cn/">DuMate 官网</a></li>
+      <li><a href="https://cloud.baidu.com/product/dumate.html">百度智能云 DuMate 企业版</a></li>
+      <li><a href="https://cloud.baidu.com/doc/Dumate/s/xmmyddwfy">DuMate 快速开始</a></li>
+      <li><a href="https://cloud.baidu.com/doc/Dumate/s/Umtmqk130">企业版模型管理</a></li>
+      <li><a href="https://cloud.baidu.com/doc/Dumate/s/Gmtim7rk4">企业版创建智能体 API</a></li>
+      <li><a href="https://arxiv.org/html/2608.26546v1">DuMateBench: Evaluating Autonomous Agents in Complex Real-World Workflows</a></li>
+      <li><a href="https://www.iyiou.com/briefing/202606151916237">百度搭子 DuMate 核心引擎升级，Token 消耗降低 75%</a></li>
+      <li><a href="https://ai-tokens.cn/news/news-147f751a5d4a7a72.html">百度搭子与英特尔推进端云协同，本地 Skill 专区上线</a></li>
+    </ul>
+
+  </div>
+
+  <nav class="article-nav">
+    <span class="article-nav-empty"></span>
+    <a class="article-nav-link next" href="blog_how_to_be_more_ambitious.html">
+      <span class="article-nav-label">下一篇 →</span>
+      <span class="article-nav-title">如何更有野心:给「有模型的人类」的教程(中文转载)</span>
+    </a>
+  </nav>
+</div>
+
+<footer class="site-footer">
+  <p>© 2026 安博成 · <a href="https://xiaoan17.github.io">xiaoan17.github.io</a></p>
+</footer>
+
+<script src="js/theme.js"></script>
+
+</body>
+</html>

@@ -4,6 +4,13 @@
 // 约定: desc 控制在两行以内(约 60-90 字),超长会被 CSS 截断为两行
 window.BLOG_POSTS = [
   {
+    title: "拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关",
+    url: "blog_dumate_architecture.html",
+    date: "2026-10-25",
+    desc: "2026-10-25 版本拆解：Electron + Go 控制面 + OpenCode 运行时 + 多模型网关；GLM-5.2、Kimi-K2.6、DeepSeek-V4.1、Qwen3.5 的真实分工。",
+    tags: ["AI Agent", "DuMate", "技术拆解", "架构"]
+  },
+  {
     title: "如何更有野心:给「有模型的人类」的教程(中文转载)",
     url: "blog_how_to_be_more_ambitious.html",
     date: "2026-10-18",

@@ -7,6 +7,13 @@
     <language>zh-CN</language>
     <atom:link href="https://xiaoan17.github.io/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
+      <title>拆开百度搭子 DuMate v1.0.88：Electron 壳、OpenCode 心与多模型网关</title>
+      <link>https://xiaoan17.github.io/blog_dumate_architecture.html</link>
+      <guid>https://xiaoan17.github.io/blog_dumate_architecture.html</guid>
+      <pubDate>Sun, 25 Oct 2026 00:00:00 +0800</pubDate>
+      <description>2026-10-25 版本拆解：Electron + Go 控制面 + OpenCode 运行时 + 多模型网关；GLM-5.2、Kimi-K2.6、DeepSeek-V4.1、Qwen3.5 的真实分工。</description>
+    </item>
+    <item>
       <title>如何更有野心:给「有模型的人类」的教程(中文转载)</title>
       <link>https://xiaoan17.github.io/blog_how_to_be_more_ambitious.html</link>
       <guid>https://xiaoan17.github.io/blog_how_to_be_more_ambitious.html</guid>
